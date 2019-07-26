@@ -17,49 +17,49 @@
   <meta name="theme-color" content="#fafafa">
 </head>
 
-<body style="background:#FFFCF4;font-family:Arial;color:grey;margin:0;">
+<body style="background:#FFFCF4;font-family:Arial;margin:0;color:grey;">
   <!--[if IE]>
     <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
   <![endif]-->
 
 	<style>
-	div {display:flex;flex-direction:row;justify-content:center;align-items:center;}
+	div {display:flex;flex-direction:column;justify-content:center;align-items:center;}
 	</style>
 
 	<!-- header -->
-	<div style="text-shadow:3px 3px 2px lightgrey;color:grey;margin:1em;">
+	<div style="background:#0070c4;color:white;padding:1em;text-align:center;flex-direction:row;">
 
-		<img src='sustaincia.svg' alt="Sustaincia" style="width:96px;height:96px;box-shadow:8px 8px 6px 0px lightgrey;border-radius:1em;margin-right:1em;"></img><br />
+		<img src='sustaincia.svg' alt="Sustaincia" style="width:96px;height:96px;box-shadow:0px 0px 5px 0px white;border-radius:1em;margin-right:1em;"></img><br />
 
 		<!--<h1>Open Sustainable Platform for Everyone</h1> -->
 		
 		<div>
 			<style>.hpot {display:none;}
-			form input {background:transparent;color:grey;border:0px;padding:0;}
+			form input {background:transparent;border:0px;padding:0;}
 			</style>
 
 			<form method="POST" action="https://formspree.io/sustaincia@gmail.com">
 			<div class="hpot"><label>Sustaincia Open Sustainable Platform for Everyone<input name="_gotcha"></label></div>
 			<label>Signup for News<br />
-			<input type="email" style="border-bottom:1px solid lightgrey;padding:0.5em;padding-left:0em;max-width:10em;" placeholder="your@email.address" name="news subscriber" required></input>
+			<input type="email" style="text-align:center;color:white;border-bottom:1px solid lightgrey;padding:0.5em;padding-left:0em;max-width:10em;" placeholder="your@email.address" name="news subscriber" required></input>
 			</label>
 			<br />
-			<input style="margin:0;" type="submit" value="Submit"></input>
+			<input style="margin:0;color:white;" type="submit" value="Submit"></input>
 			</form>
 		</div>
 
 	</div>
 
 	<!-- banner -->
-	<div style="background:#ccc5ba;color:black;padding:0.5em;">
-		Education | Lab
+	<div style="background:#4eadb8;color:white;font-size:1.2em;padding:0.5em;">
+		Newest | Education | Invest | Lab
 	</div>
 
 	<!-- hot list -->
-	<div style="flex-grow:1;flex-wrap:wrap;background:#4eadb8;justify-content:space-evenly;padding:1vw;">
+	<div style="flex-grow:1;flex-wrap:wrap;flex-direction:row;justify-content:space-evenly;padding:1vw;">
 
 		<style>
-		div.solution {color:black;background:#a4c7c9;width:45vw;height:90vw;max-width:180px;max-height:360px;margin:1vw;box-shadow:0px 0px 5px 0px #0070c4;}
+		div.solution {width:45vw;height:90vw;max-width:180px;max-height:360px;margin:1vw;box-shadow:0px 0px 5px 0px lightgrey;}
 		</style>
 
 		<div class="solution"> Solution #1 </div>
@@ -68,9 +68,11 @@
 		<div class="solution"> Solution #1 </div>
 		<div class="solution"> Solution #1 </div>
 		<div class="solution"> Solution #1 </div>
+		<a style="text-decoration:none" href="submit.html">
 		<div class="solution">
-		Solution #2
+		<h1>+</h1>
 		</div>
+		</a>
 	</div>
 
 </body>
