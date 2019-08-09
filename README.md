@@ -1,14 +1,14 @@
-# Sustaincia Web
+# Sus-tain-cia Web
 
-Starter for Sustaincia websites, contain theme and email signup form.
+Starter for Sus-tain-cia websites, contain theme and email signup form.
 
-## What is Sustaincia?
+## What is Sus-tain-cia?
 
 Innovative, Coordinating, Green, Open, Sharing Sustainable Platform for Everyone
 
 创新、协调、绿色、开放、共享 适合每个人的可持续平台
 
-Please visit [Sustaincia](https://sustaincia.com)
+Please visit [Sus-tain-cia](https://sustaincia.com)
 
 ## Getting Started
 
@@ -26,13 +26,17 @@ Clone this repository
 
 Goto the repository setting and set the domain
 
+### Search Optimization
+
 Goto [Google search console](https://search.google.com/search-console/about) and follow instruction to start indexing your site, similarly for [Bing / Yahoo](https://www.bing.com/toolbox/webmaster/)
+
+Don't use site name as repository name or within this readme, otherwise search engine will index the repository too, and your site will not be the first search result
 
 ## Contributing
 
 Contributing code please send a pull request
 
-Participate in [Sustaincia](https://sustaincia.com)
+Participate in [Sus-tain-cia](https://sustaincia.com)
 
 ### Coding style
 
