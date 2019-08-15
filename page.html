@@ -10,7 +10,6 @@
 	<script type="text/javascript" src="./y-prosemirror/prosemirror.js" async></script>
 	<link rel=stylesheet href="./y-prosemirror/prosemirror.css" async defer>
 
-
   <link rel="manifest" href="site.webmanifest">
   <link rel="apple-touch-icon" href="icon.png">
   <!-- Place favicon.ico in the root directory -->
@@ -27,20 +26,17 @@
   <![endif]-->
 
 	<style>
-		h1 { margin:0 5px;font-size: 5vh; }
-		.buttons { border:1px solid white;border-radius:1em;padding:0 0.5em;margin:0.25em; }
+		h1 { margin:0;font-size: 5vh; }
+		.buttons { border:1px solid white;border-radius:2em;padding:0 0.5em;margin:0.25em; }
 	</style>
 
 	<!-- header -->
 	<div style="background:#0070c4;color:white;padding:10px;display:flex;flex-direction:row;align-items:center;justify-content:space-between;">
 
 		<h1>Make sustainable education program</h1>
-		<!--
 		<div>
-			<div class="buttons">private</div>
-			<div class="buttons">unsaved</div>
+			<div class="buttons">not yet certified</div>
 		</div>
-		-->
 
 		<!--<img src='sustaincia.svg' alt="Sustaincia" style="width:64px;height:64px;"></img>-->
 
@@ -48,11 +44,19 @@
 
 	<!-- banner -->
 	<div style="background:#4eadb8;color:white;padding:0.5em 12px;">
-		<span> Load </span>
+
+		<span> Help </span>
+		|<span> Load </span>
 		|<span> Alone </span>
 		|<span> Private </span>
-		|<span> Help </span>
-  <button type="button" class="y-connect-btn" style="display:none;">Disconnect</button>
+		  <button type="button" class="y-connect-btn" style="display:none;">Disconnect</button>
+	</div>
+
+	<!-- Need -->
+	<div style="background:#a4c7c9;padding:0.25em 12px;display:flex;">
+		<label style="background:white;border-radius:2em;padding:0.25em 0.5em;display:flex;flex-grow:1;">🌱 
+			<input style="border:0;flex-grow:1;margin:0 0.5em;font-family:Arial;" placeholder="enter whatever you need or help with here ..." value="Teachers, Lesson Plans, Classroom"></input>
+		</label>
 	</div>
 
     <!-- PROSEMIRROR -->

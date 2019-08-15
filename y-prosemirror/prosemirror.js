@@ -24108,6 +24108,7 @@
     });
 
     window.example = { provider, ydoc, type, prosemirrorView };
+    prosemirrorView.focus()
   });
 
 }());
