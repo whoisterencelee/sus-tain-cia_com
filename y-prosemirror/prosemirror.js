@@ -11043,7 +11043,7 @@
 
   });
 
-  var index = unwrapExports(dist);
+  unwrapExports(dist);
   var dist_1 = dist.Node;
   var dist_2 = dist.ResolvedPos;
   var dist_3 = dist.NodeRange;
@@ -11058,27 +11058,7 @@
   var dist_12 = dist.DOMParser;
   var dist_13 = dist.DOMSerializer;
 
-  var dist$1 = /*#__PURE__*/Object.freeze({
-    'default': index,
-    __moduleExports: dist,
-    Node: dist_1,
-    ResolvedPos: dist_2,
-    NodeRange: dist_3,
-    Fragment: dist_4,
-    Slice: dist_5,
-    ReplaceError: dist_6,
-    Mark: dist_7,
-    Schema: dist_8,
-    NodeType: dist_9,
-    MarkType: dist_10,
-    ContentMatch: dist_11,
-    DOMParser: dist_12,
-    DOMSerializer: dist_13
-  });
-
-  var prosemirrorModel = ( dist$1 && index ) || dist$1;
-
-  var dist$2 = createCommonjsModule(function (module, exports) {
+  var dist$1 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
@@ -11541,7 +11521,7 @@
     try {
       return StepResult.ok(doc.replace(from, to, slice))
     } catch (e) {
-      if (e instanceof prosemirrorModel.ReplaceError) { return StepResult.fail(e.message) }
+      if (e instanceof dist.ReplaceError) { return StepResult.fail(e.message) }
       throw e
     }
   };
@@ -11584,12 +11564,12 @@
       if (!(other instanceof ReplaceStep) || other.structure != this.structure) { return null }
 
       if (this.from + this.slice.size == other.from && !this.slice.openEnd && !other.slice.openStart) {
-        var slice = this.slice.size + other.slice.size == 0 ? prosemirrorModel.Slice.empty
-            : new prosemirrorModel.Slice(this.slice.content.append(other.slice.content), this.slice.openStart, other.slice.openEnd);
+        var slice = this.slice.size + other.slice.size == 0 ? dist.Slice.empty
+            : new dist.Slice(this.slice.content.append(other.slice.content), this.slice.openStart, other.slice.openEnd);
         return new ReplaceStep(this.from, this.to + (other.to - other.from), slice, this.structure)
       } else if (other.to == this.from && !this.slice.openStart && !other.slice.openEnd) {
-        var slice$1 = this.slice.size + other.slice.size == 0 ? prosemirrorModel.Slice.empty
-            : new prosemirrorModel.Slice(other.slice.content.append(this.slice.content), other.slice.openStart, this.slice.openEnd);
+        var slice$1 = this.slice.size + other.slice.size == 0 ? dist.Slice.empty
+            : new dist.Slice(other.slice.content.append(this.slice.content), other.slice.openStart, this.slice.openEnd);
         return new ReplaceStep(other.from, this.to, slice$1, this.structure)
       } else {
         return null
@@ -11606,7 +11586,7 @@
     ReplaceStep.fromJSON = function fromJSON (schema, json) {
       if (typeof json.from != "number" || typeof json.to != "number")
         { throw new RangeError("Invalid input for ReplaceStep.fromJSON") }
-      return new ReplaceStep(json.from, json.to, prosemirrorModel.Slice.fromJSON(schema, json.slice), !!json.structure)
+      return new ReplaceStep(json.from, json.to, dist.Slice.fromJSON(schema, json.slice), !!json.structure)
     };
 
     return ReplaceStep;
@@ -11679,7 +11659,7 @@
           typeof json.gapFrom != "number" || typeof json.gapTo != "number" || typeof json.insert != "number")
         { throw new RangeError("Invalid input for ReplaceAroundStep.fromJSON") }
       return new ReplaceAroundStep(json.from, json.to, json.gapFrom, json.gapTo,
-                                   prosemirrorModel.Slice.fromJSON(schema, json.slice), json.insert, !!json.structure)
+                                   dist.Slice.fromJSON(schema, json.slice), json.insert, !!json.structure)
     };
 
     return ReplaceAroundStep;
@@ -11739,27 +11719,27 @@
     var gapStart = $from.before(depth + 1), gapEnd = $to.after(depth + 1);
     var start = gapStart, end = gapEnd;
 
-    var before = prosemirrorModel.Fragment.empty, openStart = 0;
+    var before = dist.Fragment.empty, openStart = 0;
     for (var d = depth, splitting = false; d > target; d--)
       { if (splitting || $from.index(d) > 0) {
         splitting = true;
-        before = prosemirrorModel.Fragment.from($from.node(d).copy(before));
+        before = dist.Fragment.from($from.node(d).copy(before));
         openStart++;
       } else {
         start--;
       } }
-    var after = prosemirrorModel.Fragment.empty, openEnd = 0;
+    var after = dist.Fragment.empty, openEnd = 0;
     for (var d$1 = depth, splitting$1 = false; d$1 > target; d$1--)
       { if (splitting$1 || $to.after(d$1 + 1) < $to.end(d$1)) {
         splitting$1 = true;
-        after = prosemirrorModel.Fragment.from($to.node(d$1).copy(after));
+        after = dist.Fragment.from($to.node(d$1).copy(after));
         openEnd++;
       } else {
         end++;
       } }
 
     return this.step(new ReplaceAroundStep(start, end, gapStart, gapEnd,
-                                           new prosemirrorModel.Slice(before.append(after), openStart, openEnd),
+                                           new dist.Slice(before.append(after), openStart, openEnd),
                                            before.size - openStart, true))
   };
 
@@ -11811,12 +11791,12 @@
   // The wrappers are assumed to be valid in this position, and should
   // probably be computed with [`findWrapping`](#transform.findWrapping).
   Transform.prototype.wrap = function(range, wrappers) {
-    var content = prosemirrorModel.Fragment.empty;
+    var content = dist.Fragment.empty;
     for (var i = wrappers.length - 1; i >= 0; i--)
-      { content = prosemirrorModel.Fragment.from(wrappers[i].type.create(wrappers[i].attrs, content)); }
+      { content = dist.Fragment.from(wrappers[i].type.create(wrappers[i].attrs, content)); }
 
     var start = range.start, end = range.end;
-    return this.step(new ReplaceAroundStep(start, end, start, end, new prosemirrorModel.Slice(content, 0, 0), wrappers.length, true))
+    return this.step(new ReplaceAroundStep(start, end, start, end, new dist.Slice(content, 0, 0), wrappers.length, true))
   };
 
   // :: (number, ?number, NodeType, ?Object) → this
@@ -11835,7 +11815,7 @@
         var mapping = this$1.mapping.slice(mapFrom);
         var startM = mapping.map(pos, 1), endM = mapping.map(pos + node.nodeSize, 1);
         this$1.step(new ReplaceAroundStep(startM, endM, startM + 1, endM - 1,
-                                        new prosemirrorModel.Slice(prosemirrorModel.Fragment.from(type.create(attrs, null, node.marks)), 0, 0), 1, true));
+                                        new dist.Slice(dist.Fragment.from(type.create(attrs, null, node.marks)), 0, 0), 1, true));
         return false
       }
     });
@@ -11862,7 +11842,7 @@
       { throw new RangeError("Invalid content for node type " + type.name) }
 
     return this.step(new ReplaceAroundStep(pos, pos + node.nodeSize, pos + 1, pos + node.nodeSize - 1,
-                                           new prosemirrorModel.Slice(prosemirrorModel.Fragment.from(newNode), 0, 0), 1, true))
+                                           new dist.Slice(dist.Fragment.from(newNode), 0, 0), 1, true))
   };
 
   // :: (Node, number, number, ?[?{type: NodeType, attrs: ?Object}]) → bool
@@ -11899,13 +11879,13 @@
   Transform.prototype.split = function(pos, depth, typesAfter) {
     if ( depth === void 0 ) depth = 1;
 
-    var $pos = this.doc.resolve(pos), before = prosemirrorModel.Fragment.empty, after = prosemirrorModel.Fragment.empty;
+    var $pos = this.doc.resolve(pos), before = dist.Fragment.empty, after = dist.Fragment.empty;
     for (var d = $pos.depth, e = $pos.depth - depth, i = depth - 1; d > e; d--, i--) {
-      before = prosemirrorModel.Fragment.from($pos.node(d).copy(before));
+      before = dist.Fragment.from($pos.node(d).copy(before));
       var typeAfter = typesAfter && typesAfter[i];
-      after = prosemirrorModel.Fragment.from(typeAfter ? typeAfter.type.create(typeAfter.attrs, after) : $pos.node(d).copy(after));
+      after = dist.Fragment.from(typeAfter ? typeAfter.type.create(typeAfter.attrs, after) : $pos.node(d).copy(after));
     }
-    return this.step(new ReplaceStep(pos, pos, new prosemirrorModel.Slice(before.append(after), depth, depth, true)))
+    return this.step(new ReplaceStep(pos, pos, new dist.Slice(before.append(after), depth, depth, true)))
   };
 
   // :: (Node, number) → bool
@@ -11953,7 +11933,7 @@
   Transform.prototype.join = function(pos, depth) {
     if ( depth === void 0 ) depth = 1;
 
-    var step = new ReplaceStep(pos - depth, pos + depth, prosemirrorModel.Slice.empty, true);
+    var step = new ReplaceStep(pos - depth, pos + depth, dist.Slice.empty, true);
     return this.step(step)
   };
 
@@ -12011,7 +11991,7 @@
       if (child.isInline) { child = f(child, parent, i); }
       mapped.push(child);
     }
-    return prosemirrorModel.Fragment.fromArray(mapped)
+    return dist.Fragment.fromArray(mapped)
   }
 
   // ::- Add a mark to all inline content between two positions.
@@ -12032,7 +12012,7 @@
 
       var oldSlice = doc.slice(this.from, this.to), $from = doc.resolve(this.from);
       var parent = $from.node($from.sharedDepth(this.to));
-      var slice = new prosemirrorModel.Slice(mapFragment(oldSlice.content, function (node, parent) {
+      var slice = new dist.Slice(mapFragment(oldSlice.content, function (node, parent) {
         if (!parent.type.allowsMarkType(this$1.mark.type)) { return node }
         return node.mark(this$1.mark.addToSet(node.marks))
       }, parent), oldSlice.openStart, oldSlice.openEnd);
@@ -12090,7 +12070,7 @@
       var this$1 = this;
 
       var oldSlice = doc.slice(this.from, this.to);
-      var slice = new prosemirrorModel.Slice(mapFragment(oldSlice.content, function (node) {
+      var slice = new dist.Slice(mapFragment(oldSlice.content, function (node) {
         return node.mark(this$1.mark.removeFromSet(node.marks))
       }), oldSlice.openStart, oldSlice.openEnd);
       return StepResult.fromReplace(doc, this.from, this.to, slice)
@@ -12178,7 +12158,7 @@
       if (!node.isInline) { return }
       step++;
       var toRemove = null;
-      if (mark instanceof prosemirrorModel.MarkType) {
+      if (mark instanceof dist.MarkType) {
         var found = mark.isInSet(node.marks);
         if (found) { toRemove = [found]; }
       } else if (mark) {
@@ -12222,7 +12202,7 @@
       var child = node.child(i), end = cur + child.nodeSize;
       var allowed = match.matchType(child.type, child.attrs);
       if (!allowed) {
-        delSteps.push(new ReplaceStep(cur, end, prosemirrorModel.Slice.empty));
+        delSteps.push(new ReplaceStep(cur, end, dist.Slice.empty));
       } else {
         match = allowed;
         for (var j = 0; j < child.marks.length; j++) { if (!parentType.allowsMarkType(child.marks[j].type))
@@ -12231,8 +12211,8 @@
       cur = end;
     }
     if (!match.validEnd) {
-      var fill = match.fillBefore(prosemirrorModel.Fragment.empty, true);
-      this.replace(cur, cur, new prosemirrorModel.Slice(fill, 0, 0));
+      var fill = match.fillBefore(dist.Fragment.empty, true);
+      this.replace(cur, cur, new dist.Slice(fill, 0, 0));
     }
     for (var i$1 = delSteps.length - 1; i$1 >= 0; i$1--) { this$1.step(delSteps[i$1]); }
     return this
@@ -12245,7 +12225,7 @@
   // would be a no-op (an empty slice over an empty range).
   function replaceStep(doc, from, to, slice) {
     if ( to === void 0 ) to = from;
-    if ( slice === void 0 ) slice = prosemirrorModel.Slice.empty;
+    if ( slice === void 0 ) slice = dist.Slice.empty;
 
     if (from == to && !slice.size) { return null }
 
@@ -12272,7 +12252,7 @@
   // given `slice`.
   Transform.prototype.replace = function(from, to, slice) {
     if ( to === void 0 ) to = from;
-    if ( slice === void 0 ) slice = prosemirrorModel.Slice.empty;
+    if ( slice === void 0 ) slice = dist.Slice.empty;
 
     var step = replaceStep(this.doc, from, to, slice);
     if (step) { this.step(step); }
@@ -12283,13 +12263,13 @@
   // Replace the given range with the given content, which may be a
   // fragment, node, or array of nodes.
   Transform.prototype.replaceWith = function(from, to, content) {
-    return this.replace(from, to, new prosemirrorModel.Slice(prosemirrorModel.Fragment.from(content), 0, 0))
+    return this.replace(from, to, new dist.Slice(dist.Fragment.from(content), 0, 0))
   };
 
   // :: (number, number) → this
   // Delete the content between the given positions.
   Transform.prototype.delete = function(from, to) {
-    return this.replace(from, to, prosemirrorModel.Slice.empty)
+    return this.replace(from, to, dist.Slice.empty)
   };
 
   // :: (number, union<Fragment, Node, [Node]>) → this
@@ -12301,11 +12281,11 @@
 
 
   function fitLeftInner($from, depth, placed, placedBelow) {
-    var content = prosemirrorModel.Fragment.empty, openEnd = 0, placedHere = placed[depth];
+    var content = dist.Fragment.empty, openEnd = 0, placedHere = placed[depth];
     if ($from.depth > depth) {
       var inner = fitLeftInner($from, depth + 1, placed, placedBelow || placedHere);
       openEnd = inner.openEnd + 1;
-      content = prosemirrorModel.Fragment.from($from.node(depth + 1).copy(inner.content));
+      content = dist.Fragment.from($from.node(depth + 1).copy(inner.content));
     }
 
     if (placedHere) {
@@ -12313,7 +12293,7 @@
       openEnd = placedHere.openEnd;
     }
     if (placedBelow) {
-      content = content.append($from.node(depth).contentMatchAt($from.indexAfter(depth)).fillBefore(prosemirrorModel.Fragment.empty, true));
+      content = content.append($from.node(depth).contentMatchAt($from.indexAfter(depth)).fillBefore(dist.Fragment.empty, true));
       openEnd = 0;
     }
 
@@ -12324,7 +12304,7 @@
     var ref = fitLeftInner($from, 0, placed, false);
     var content = ref.content;
     var openEnd = ref.openEnd;
-    return new prosemirrorModel.Slice(content, $from.depth, openEnd || 0)
+    return new dist.Slice(content, $from.depth, openEnd || 0)
   }
 
   function fitRightJoin(content, parent, $from, $to, depth, openStart, openEnd) {
@@ -12394,7 +12374,7 @@
       content = content.replaceChild(count - 1, closed);
     }
 
-    return node.copy(content.append(match.fillBefore(prosemirrorModel.Fragment.empty, true)))
+    return node.copy(content.append(match.fillBefore(dist.Fragment.empty, true)))
   }
 
   function fitRightSeparate($to, depth) {
@@ -12410,7 +12390,7 @@
       openStart--;
       openEnd--;
     }
-    return new prosemirrorModel.Slice(content, openStart, openEnd)
+    return new dist.Slice(content, openStart, openEnd)
   }
 
   // : (ResolvedPos, ResolvedPos, number, Slice) → Slice
@@ -12482,7 +12462,7 @@
     this.open = [];
     for (var d = 0; d <= $pos.depth; d++) {
       var parent = $pos.node(d), match = parent.contentMatchAt($pos.indexAfter(d));
-      this$1.open.push({parent: parent, match: match, content: prosemirrorModel.Fragment.empty, wrapper: false, openEnd: 0, depth: d});
+      this$1.open.push({parent: parent, match: match, content: dist.Fragment.empty, wrapper: false, openEnd: 0, depth: d});
     }
     this.placed = [];
   };
@@ -12521,7 +12501,7 @@
                           openEnd && i == result.content.childCount.length - 1 ? openEnd - 1 : 0,
                           pass, child);
       }
-      result = prosemirrorModel.Fragment.empty;
+      result = dist.Fragment.empty;
     }
     return result
   };
@@ -12548,7 +12528,7 @@
             d++;
             open = {parent: wrap[w].create(),
                     match: wrap[w].contentMatch,
-                    content: prosemirrorModel.Fragment.empty, wrapper: true, openEnd: 0, depth: d + w};
+                    content: dist.Fragment.empty, wrapper: true, openEnd: 0, depth: d + w};
             this$1.open.push(open);
           }
         }
@@ -12556,7 +12536,7 @@
         // See if the child fits here
         var match = open.match.matchType(child.type);
         if (!match) {
-          var fill = open.match.fillBefore(prosemirrorModel.Fragment.from(child));
+          var fill = open.match.fillBefore(dist.Fragment.from(child));
           if (fill) {
             for (var j = 0; j < fill.childCount; j++) {
               var ch = fill.child(j);
@@ -12600,7 +12580,7 @@
          parent && this.open[this.open.length - 1].parent.type == parent.type))
       { this.closeNode(); }
 
-    return new prosemirrorModel.Slice(fragment.cutByIndex(i), openStart, openEnd)
+    return new dist.Slice(fragment.cutByIndex(i), openStart, openEnd)
   };
 
   Frontier.prototype.addNode = function addNode (open, node, openEnd) {
@@ -12633,7 +12613,7 @@
       var last = closeNodeEnd(node.lastChild, depth - 1);
       content = node.content.replaceChild(node.childCount - 1, last);
     }
-    var fill = node.contentMatchAt(node.childCount).fillBefore(prosemirrorModel.Fragment.empty, true);
+    var fill = node.contentMatchAt(node.childCount).fillBefore(dist.Fragment.empty, true);
     return node.copy(content.append(fill))
   }
 
@@ -12715,7 +12695,7 @@
         var parent = $from.node(targetDepth - 1), index = $from.index(targetDepth - 1);
         if (parent.canReplaceWith(index, index, insert.type, insert.marks))
           { return this$1.replace($from.before(targetDepth), expand ? $to.after(targetDepth) : to,
-                              new prosemirrorModel.Slice(closeFragment(slice.content, 0, slice.openStart, openDepth),
+                              new dist.Slice(closeFragment(slice.content, 0, slice.openStart, openDepth),
                                         openDepth, slice.openEnd)) }
       }
     }
@@ -12746,7 +12726,7 @@
       var point = insertPoint(this.doc, from, node.type);
       if (point != null) { from = to = point; }
     }
-    return this.replaceRange(from, to, new prosemirrorModel.Slice(prosemirrorModel.Fragment.from(node), 0, 0))
+    return this.replaceRange(from, to, new dist.Slice(dist.Fragment.from(node), 0, 0))
   };
 
   // :: (number, number) → this
@@ -12809,30 +12789,30 @@
 
   });
 
-  var index$1 = unwrapExports(dist$2);
-  var dist_1$1 = dist$2.Transform;
-  var dist_2$1 = dist$2.TransformError;
-  var dist_3$1 = dist$2.Step;
-  var dist_4$1 = dist$2.StepResult;
-  var dist_5$1 = dist$2.joinPoint;
-  var dist_6$1 = dist$2.canJoin;
-  var dist_7$1 = dist$2.canSplit;
-  var dist_8$1 = dist$2.insertPoint;
-  var dist_9$1 = dist$2.dropPoint;
-  var dist_10$1 = dist$2.liftTarget;
-  var dist_11$1 = dist$2.findWrapping;
-  var dist_12$1 = dist$2.StepMap;
-  var dist_13$1 = dist$2.MapResult;
-  var dist_14 = dist$2.Mapping;
-  var dist_15 = dist$2.AddMarkStep;
-  var dist_16 = dist$2.RemoveMarkStep;
-  var dist_17 = dist$2.ReplaceStep;
-  var dist_18 = dist$2.ReplaceAroundStep;
-  var dist_19 = dist$2.replaceStep;
+  var index = unwrapExports(dist$1);
+  var dist_1$1 = dist$1.Transform;
+  var dist_2$1 = dist$1.TransformError;
+  var dist_3$1 = dist$1.Step;
+  var dist_4$1 = dist$1.StepResult;
+  var dist_5$1 = dist$1.joinPoint;
+  var dist_6$1 = dist$1.canJoin;
+  var dist_7$1 = dist$1.canSplit;
+  var dist_8$1 = dist$1.insertPoint;
+  var dist_9$1 = dist$1.dropPoint;
+  var dist_10$1 = dist$1.liftTarget;
+  var dist_11$1 = dist$1.findWrapping;
+  var dist_12$1 = dist$1.StepMap;
+  var dist_13$1 = dist$1.MapResult;
+  var dist_14 = dist$1.Mapping;
+  var dist_15 = dist$1.AddMarkStep;
+  var dist_16 = dist$1.RemoveMarkStep;
+  var dist_17 = dist$1.ReplaceStep;
+  var dist_18 = dist$1.ReplaceAroundStep;
+  var dist_19 = dist$1.replaceStep;
 
-  var dist$3 = /*#__PURE__*/Object.freeze({
-    'default': index$1,
-    __moduleExports: dist$2,
+  var dist$2 = /*#__PURE__*/Object.freeze({
+    'default': index,
+    __moduleExports: dist$1,
     Transform: dist_1$1,
     TransformError: dist_2$1,
     Step: dist_3$1,
@@ -12854,9 +12834,9 @@
     replaceStep: dist_19
   });
 
-  var prosemirrorTransform = ( dist$3 && index$1 ) || dist$3;
+  var prosemirrorTransform = ( dist$2 && index ) || dist$2;
 
-  var dist$4 = createCommonjsModule(function (module, exports) {
+  var dist$3 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
@@ -12937,7 +12917,7 @@
   // Replace the selection with a slice or, if no slice is given,
   // delete the selection. Will append to the given transaction.
   Selection.prototype.replace = function replace (tr, content) {
-      if ( content === void 0 ) content = prosemirrorModel.Slice.empty;
+      if ( content === void 0 ) content = dist.Slice.empty;
 
     // Put the new selection at the position after the inserted
     // content. When that ended in an inline node, search backwards,
@@ -12954,7 +12934,7 @@
         var $from = ref.$from;
         var $to = ref.$to;
         var mapping = tr.mapping.slice(mapFrom);
-      tr.replaceRange(mapping.map($from.pos), mapping.map($to.pos), i$1 ? prosemirrorModel.Slice.empty : content);
+      tr.replaceRange(mapping.map($from.pos), mapping.map($to.pos), i$1 ? dist.Slice.empty : content);
       if (i$1 == 0)
         { selectionToInsertionEnd(tr, mapFrom, (lastNode ? lastNode.isInline : lastParent && lastParent.isTextblock) ? -1 : 1); }
     }
@@ -13127,10 +13107,10 @@
     };
 
     TextSelection.prototype.replace = function replace (tr, content) {
-      if ( content === void 0 ) content = prosemirrorModel.Slice.empty;
+      if ( content === void 0 ) content = dist.Slice.empty;
 
       Selection.prototype.replace.call(this, tr, content);
-      if (content == prosemirrorModel.Slice.empty) {
+      if (content == dist.Slice.empty) {
         var marks = this.$from.marksAcross(this.$to);
         if (marks) { tr.ensureMarks(marks); }
       }
@@ -13235,7 +13215,7 @@
     };
 
     NodeSelection.prototype.content = function content () {
-      return new prosemirrorModel.Slice(prosemirrorModel.Fragment.from(this.node), 0, 0)
+      return new dist.Slice(dist.Fragment.from(this.node), 0, 0)
     };
 
     NodeSelection.prototype.eq = function eq (other) {
@@ -13441,7 +13421,7 @@
     // at the selection, match the given set of marks. Does nothing if
     // this is already the case.
     Transaction.prototype.ensureMarks = function ensureMarks (marks) {
-      if (!prosemirrorModel.Mark.sameSet(this.storedMarks || this.selection.$from.marks(), marks))
+      if (!dist.Mark.sameSet(this.storedMarks || this.selection.$from.marks(), marks))
         { this.setStoredMarks(marks); }
       return this
     };
@@ -13491,7 +13471,7 @@
     Transaction.prototype.replaceSelectionWith = function replaceSelectionWith (node, inheritMarks) {
       var selection = this.selection;
       if (inheritMarks !== false)
-        { node = node.mark(this.storedMarks || (selection.empty ? selection.$from.marks() : (selection.$from.marksAcross(selection.$to) || prosemirrorModel.Mark.none))); }
+        { node = node.mark(this.storedMarks || (selection.empty ? selection.$from.marks() : (selection.$from.marksAcross(selection.$to) || dist.Mark.none))); }
       selection.replaceWith(this, node);
       return this
     };
@@ -13826,7 +13806,7 @@
     var instance = new EditorState($config);
     $config.fields.forEach(function (field) {
       if (field.name == "doc") {
-        instance.doc = prosemirrorModel.Node.fromJSON(config.schema, json.doc);
+        instance.doc = dist.Node.fromJSON(config.schema, json.doc);
       } else if (field.name == "selection") {
         instance.selection = Selection.fromJSON(instance.doc, json.selection);
       } else if (field.name == "storedMarks") {
@@ -14006,34 +13986,18 @@
 
   });
 
-  var index$2 = unwrapExports(dist$4);
-  var dist_1$2 = dist$4.Selection;
-  var dist_2$2 = dist$4.SelectionRange;
-  var dist_3$2 = dist$4.TextSelection;
-  var dist_4$2 = dist$4.NodeSelection;
-  var dist_5$2 = dist$4.AllSelection;
-  var dist_6$2 = dist$4.Transaction;
-  var dist_7$2 = dist$4.EditorState;
-  var dist_8$2 = dist$4.Plugin;
-  var dist_9$2 = dist$4.PluginKey;
+  unwrapExports(dist$3);
+  var dist_1$2 = dist$3.Selection;
+  var dist_2$2 = dist$3.SelectionRange;
+  var dist_3$2 = dist$3.TextSelection;
+  var dist_4$2 = dist$3.NodeSelection;
+  var dist_5$2 = dist$3.AllSelection;
+  var dist_6$2 = dist$3.Transaction;
+  var dist_7$2 = dist$3.EditorState;
+  var dist_8$2 = dist$3.Plugin;
+  var dist_9$2 = dist$3.PluginKey;
 
-  var dist$5 = /*#__PURE__*/Object.freeze({
-    'default': index$2,
-    __moduleExports: dist$4,
-    Selection: dist_1$2,
-    SelectionRange: dist_2$2,
-    TextSelection: dist_3$2,
-    NodeSelection: dist_4$2,
-    AllSelection: dist_5$2,
-    Transaction: dist_6$2,
-    EditorState: dist_7$2,
-    Plugin: dist_8$2,
-    PluginKey: dist_9$2
-  });
-
-  var prosemirrorState = ( dist$5 && index$2 ) || dist$5;
-
-  var dist$6 = createCommonjsModule(function (module, exports) {
+  var dist$4 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
@@ -15096,7 +15060,7 @@
       var custom = view.nodeViews[mark.type.name];
       var spec = custom && custom(mark, view, inline);
       if (!spec || !spec.dom)
-        { spec = prosemirrorModel.DOMSerializer.renderSpec(document, mark.type.spec.toDOM(mark, inline)); }
+        { spec = dist.DOMSerializer.renderSpec(document, mark.type.spec.toDOM(mark, inline)); }
       return new MarkViewDesc(parent, mark, spec.dom, spec.contentDOM || spec.dom)
     };
 
@@ -15171,7 +15135,7 @@
         else if (dom.nodeType != 3) { throw new RangeError("Text must be rendered as a DOM text node") }
       } else if (!dom) {
         var assign;
-        ((assign = prosemirrorModel.DOMSerializer.renderSpec(document, node.type.spec.toDOM(node)), dom = assign.dom, contentDOM = assign.contentDOM));
+        ((assign = dist.DOMSerializer.renderSpec(document, node.type.spec.toDOM(node)), dom = assign.dom, contentDOM = assign.contentDOM));
       }
       if (!contentDOM && !node.isText && dom.nodeName != "BR") { // Chrome gets confused by <br contenteditable=false>
         if (!dom.hasAttribute("contenteditable")) { dom.contentEditable = false; }
@@ -15202,7 +15166,7 @@
       var rule = {node: this.node.type.name, attrs: this.node.attrs};
       if (this.node.type.spec.code) { rule.preserveWhitespace = "full"; }
       if (this.contentDOM && !this.contentLost) { rule.contentElement = this.contentDOM; }
-      else { rule.getContent = function () { return this$1.contentDOM ? prosemirrorModel.Fragment.empty : this$1.node.content; }; }
+      else { rule.getContent = function () { return this$1.contentDOM ? dist.Fragment.empty : this$1.node.content; }; }
       return rule
     };
 
@@ -15229,7 +15193,7 @@
         if (widget.spec.marks)
           { updater.syncToMarks(widget.spec.marks, inline, view); }
         else if (widget.type.side >= 0)
-          { updater.syncToMarks(i == this$1.node.childCount ? prosemirrorModel.Mark.none : this$1.node.child(i).marks, inline, view); }
+          { updater.syncToMarks(i == this$1.node.childCount ? dist.Mark.none : this$1.node.child(i).marks, inline, view); }
         // If the next node is a desc matching this widget, reuse it,
         // otherwise insert the widget as a new view desc.
         updater.placeWidget(widget, view, off);
@@ -15270,7 +15234,7 @@
       var ref = view.state.selection;
       var from = ref.from;
       var to = ref.to;
-      if (!(view.state.selection instanceof prosemirrorState.TextSelection) || from < pos || to > pos + this.node.content.size) { return }
+      if (!(view.state.selection instanceof dist$3.TextSelection) || from < pos || to > pos + this.node.content.size) { return }
       var sel = view.root.getSelection();
       var textNode = nearbyTextNode(sel.focusNode, sel.focusOffset);
       if (!textNode || !this.dom.contains(textNode.parentNode)) { return }
@@ -15960,7 +15924,7 @@
     var $head = ref.$head;
     var $side = dir > 0 ? $anchor.max($head) : $anchor.min($head);
     var $start = !$side.parent.inlineContent ? $side : $side.depth ? state.doc.resolve(dir > 0 ? $side.after() : $side.before()) : null;
-    return $start && prosemirrorState.Selection.findFrom($start, dir)
+    return $start && dist$3.Selection.findFrom($start, dir)
   }
 
   function apply(view, sel) {
@@ -15970,31 +15934,31 @@
 
   function selectHorizontally(view, dir, mods) {
     var sel = view.state.selection;
-    if (sel instanceof prosemirrorState.TextSelection) {
+    if (sel instanceof dist$3.TextSelection) {
       if (!sel.empty || mods.indexOf("s") > -1) {
         return false
       } else if (view.endOfTextblock(dir > 0 ? "right" : "left")) {
         var next = moveSelectionBlock(view.state, dir);
-        if (next && (next instanceof prosemirrorState.NodeSelection)) { return apply(view, next) }
+        if (next && (next instanceof dist$3.NodeSelection)) { return apply(view, next) }
         return false
       } else {
         var $head = sel.$head, node = $head.textOffset ? null : dir < 0 ? $head.nodeBefore : $head.nodeAfter, desc;
         if (!node || node.isText) { return false }
         var nodePos = dir < 0 ? $head.pos - node.nodeSize : $head.pos;
         if (!(node.isAtom || (desc = view.docView.descAt(nodePos)) && !desc.contentDOM)) { return false }
-        if (prosemirrorState.NodeSelection.isSelectable(node)) {
-          return apply(view, new prosemirrorState.NodeSelection(dir < 0 ? view.state.doc.resolve($head.pos - node.nodeSize) : $head))
+        if (dist$3.NodeSelection.isSelectable(node)) {
+          return apply(view, new dist$3.NodeSelection(dir < 0 ? view.state.doc.resolve($head.pos - node.nodeSize) : $head))
         } else if (result.webkit) {
           // Chrome and Safari will introduce extra pointless cursor
           // positions around inline uneditable nodes, so we have to
           // take over and move the cursor past them (#937)
-          return apply(view, new prosemirrorState.TextSelection(view.state.doc.resolve(dir < 0 ? nodePos : nodePos + node.nodeSize)))
+          return apply(view, new dist$3.TextSelection(view.state.doc.resolve(dir < 0 ? nodePos : nodePos + node.nodeSize)))
         } else {
           return false
         }
       }
-    } else if (sel instanceof prosemirrorState.NodeSelection && sel.node.isInline) {
-      return apply(view, new prosemirrorState.TextSelection(dir > 0 ? sel.$to : sel.$from))
+    } else if (sel instanceof dist$3.NodeSelection && sel.node.isInline) {
+      return apply(view, new dist$3.TextSelection(dir > 0 ? sel.$to : sel.$from))
     } else {
       var next$1 = moveSelectionBlock(view.state, dir);
       if (next$1) { return apply(view, next$1) }
@@ -16129,24 +16093,24 @@
   // browser)
   function selectVertically(view, dir, mods) {
     var sel = view.state.selection;
-    if (sel instanceof prosemirrorState.TextSelection && !sel.empty || mods.indexOf("s") > -1) { return false }
+    if (sel instanceof dist$3.TextSelection && !sel.empty || mods.indexOf("s") > -1) { return false }
     var $from = sel.$from;
     var $to = sel.$to;
 
     if (!$from.parent.inlineContent || view.endOfTextblock(dir < 0 ? "up" : "down")) {
       var next = moveSelectionBlock(view.state, dir);
-      if (next && (next instanceof prosemirrorState.NodeSelection))
+      if (next && (next instanceof dist$3.NodeSelection))
         { return apply(view, next) }
     }
     if (!$from.parent.inlineContent) {
-      var beyond = prosemirrorState.Selection.findFrom(dir < 0 ? $from : $to, dir);
+      var beyond = dist$3.Selection.findFrom(dir < 0 ? $from : $to, dir);
       return beyond ? apply(view, beyond) : true
     }
     return false
   }
 
   function stopNativeHorizontalDelete(view, dir) {
-    if (!(view.state.selection instanceof prosemirrorState.TextSelection)) { return true }
+    if (!(view.state.selection instanceof dist$3.TextSelection)) { return true }
     var ref = view.state.selection;
     var $head = ref.$head;
     var $anchor = ref.$anchor;
@@ -16235,9 +16199,9 @@
     if (selectionCollapsed(domSel)) {
       $anchor = $head;
       while (nearestDesc && !nearestDesc.node) { nearestDesc = nearestDesc.parent; }
-      if (nearestDesc && nearestDesc.node.isAtom && prosemirrorState.NodeSelection.isSelectable(nearestDesc.node) && nearestDesc.parent) {
+      if (nearestDesc && nearestDesc.node.isAtom && dist$3.NodeSelection.isSelectable(nearestDesc.node) && nearestDesc.parent) {
         var pos = nearestDesc.posBefore;
-        selection = new prosemirrorState.NodeSelection(head == pos ? $head : doc.resolve(pos));
+        selection = new dist$3.NodeSelection(head == pos ? $head : doc.resolve(pos));
       }
     } else {
       $anchor = doc.resolve(view.docView.posFromDOM(domSel.anchorNode, domSel.anchorOffset));
@@ -16274,7 +16238,7 @@
       var anchor = sel.anchor;
       var head = sel.head;
       var resetEditableFrom, resetEditableTo;
-      if (brokenSelectBetweenUneditable && !(sel instanceof prosemirrorState.TextSelection)) {
+      if (brokenSelectBetweenUneditable && !(sel instanceof dist$3.TextSelection)) {
         if (!sel.$from.parent.inlineContent)
           { resetEditableFrom = temporarilyEditableNear(view, sel.from); }
         if (!sel.empty && !sel.$from.parent.inlineContent)
@@ -16352,7 +16316,7 @@
   }
 
   function syncNodeSelection(view, sel) {
-    if (sel instanceof prosemirrorState.NodeSelection) {
+    if (sel instanceof dist$3.NodeSelection) {
       var desc = view.docView.descAt(sel.from);
       if (desc != view.lastSelectedViewDesc) {
         clearNodeSelection(view);
@@ -16375,7 +16339,7 @@
 
   function selectionBetween(view, $anchor, $head, bias) {
     return view.someProp("createSelectionBetween", function (f) { return f(view, $anchor, $head); })
-      || prosemirrorState.TextSelection.between($anchor, $head, bias)
+      || dist$3.TextSelection.between($anchor, $head, bias)
   }
 
   function hasFocusAndSelection(view) {
@@ -16450,7 +16414,7 @@
       }
     }
     var startDoc = view.state.doc;
-    var parser = view.someProp("domParser") || prosemirrorModel.DOMParser.fromSchema(view.state.schema);
+    var parser = view.someProp("domParser") || dist.DOMParser.fromSchema(view.state.schema);
     var $from = startDoc.resolve(from);
     var sel = null, doc = parser.parse(parent, {
       topNode: $from.parent,
@@ -16524,7 +16488,7 @@
 
     var change = findDiff(compare.content, parse.doc.content, parse.from, preferredPos, preferredSide);
     if (!change) {
-      if (typeOver && sel instanceof prosemirrorState.TextSelection && !sel.empty && sel.$head.sameParent(sel.$anchor) &&
+      if (typeOver && sel instanceof dist$3.TextSelection && !sel.empty && sel.$head.sameParent(sel.$anchor) &&
           !view.composing && !(parse.sel && parse.sel.anchor != parse.sel.head)) {
         var state = view.state, sel$1 = state.selection;
         view.dispatch(state.tr.replaceSelectionWith(state.schema.text(state.doc.textBetween(sel$1.from, sel$1.to)), true).scrollIntoView());
@@ -16540,7 +16504,7 @@
     // that's smaller than what was actually overwritten.
     if (view.state.selection.from < view.state.selection.to &&
         change.start == change.endB &&
-        view.state.selection instanceof prosemirrorState.TextSelection) {
+        view.state.selection instanceof dist$3.TextSelection) {
       if (change.start > view.state.selection.from && change.start <= view.state.selection.from + 2) {
         change.start = view.state.selection.from;
       } else if (change.endA < view.state.selection.to && change.endA >= view.state.selection.to - 2) {
@@ -16555,7 +16519,7 @@
     // If this looks like the effect of pressing Enter, just dispatch an
     // Enter key instead.
     if (!$from.sameParent($to) && $from.pos < parse.doc.content.size &&
-        (nextSel = prosemirrorState.Selection.findFrom(parse.doc.resolve($from.pos + 1), 1, true)) &&
+        (nextSel = dist$3.Selection.findFrom(parse.doc.resolve($from.pos + 1), 1, true)) &&
         nextSel.head == $to.pos &&
         view.someProp("handleKeyDown", function (f) { return f(view, keyEvent(13, "Enter")); }))
       { return }
@@ -16630,7 +16594,7 @@
     }
     var updated = [];
     for (var i$2 = 0; i$2 < prev.childCount; i$2++) { updated.push(update(prev.child(i$2))); }
-    if (prosemirrorModel.Fragment.from(updated).eq(cur)) { return {mark: mark, type: type} }
+    if (dist.Fragment.from(updated).eq(cur)) { return {mark: mark, type: type} }
   }
 
   function looksLikeJoin(old, start, end, $newStart, $newEnd) {
@@ -16709,7 +16673,7 @@
       content = node.content;
     }
 
-    var serializer = view.someProp("clipboardSerializer") || prosemirrorModel.DOMSerializer.fromSchema(view.state.schema);
+    var serializer = view.someProp("clipboardSerializer") || dist.DOMSerializer.fromSchema(view.state.schema);
     var wrap = document.createElement("div");
     wrap.appendChild(serializer.serializeFragment(content));
 
@@ -16740,7 +16704,7 @@
     var asText = text && (plainText || inCode || !html);
     if (asText) {
       view.someProp("transformPastedText", function (f) { text = f(text); });
-      if (inCode) { return new prosemirrorModel.Slice(prosemirrorModel.Fragment.from(view.state.schema.text(text)), 0, 0) }
+      if (inCode) { return new dist.Slice(dist.Fragment.from(view.state.schema.text(text)), 0, 0) }
       var parsed = view.someProp("clipboardTextParser", function (f) { return f(text, $context); });
       if (parsed) {
         slice = parsed;
@@ -16758,14 +16722,14 @@
     var contextNode = dom && dom.querySelector("[data-pm-slice]");
     var sliceData = contextNode && /^(\d+) (\d+) (.*)/.exec(contextNode.getAttribute("data-pm-slice"));
     if (!slice) {
-      var parser = view.someProp("clipboardParser") || view.someProp("domParser") || prosemirrorModel.DOMParser.fromSchema(view.state.schema);
+      var parser = view.someProp("clipboardParser") || view.someProp("domParser") || dist.DOMParser.fromSchema(view.state.schema);
       slice = parser.parseSlice(dom, {preserveWhitespace: !!(asText || sliceData), context: $context});
     }
     if (sliceData)
-      { slice = addContext(new prosemirrorModel.Slice(slice.content, Math.min(slice.openStart, +sliceData[1]),
+      { slice = addContext(new dist.Slice(slice.content, Math.min(slice.openStart, +sliceData[1]),
                                    Math.min(slice.openEnd, +sliceData[2])), sliceData[3]); }
     else // HTML wasn't created by ProseMirror. Make sure top-level siblings are coherent
-      { slice = prosemirrorModel.Slice.maxOpen(normalizeSiblings(slice.content, $context), false); }
+      { slice = dist.Slice.maxOpen(normalizeSiblings(slice.content, $context), false); }
     view.someProp("transformPasted", function (f) { slice = f(slice); });
     return slice
   }
@@ -16798,7 +16762,7 @@
           lastWrap = wrap;
         }
       });
-      if (result) { return { v: prosemirrorModel.Fragment.from(result) } }
+      if (result) { return { v: dist.Fragment.from(result) } }
     };
 
     for (var d = $context.depth; d >= 0; d--) {
@@ -16813,7 +16777,7 @@
     if ( from === void 0 ) from = 0;
 
     for (var i = wrap.length - 1; i >= from; i--)
-      { node = wrap[i].create(null, prosemirrorModel.Fragment.from(node)); }
+      { node = wrap[i].create(null, dist.Fragment.from(node)); }
     return node
   }
 
@@ -16825,14 +16789,14 @@
       if (inner) { return sibling.copy(sibling.content.replaceChild(sibling.childCount - 1, inner)) }
       var match = sibling.contentMatchAt(sibling.childCount);
       if (match.matchType(depth == wrap.length - 1 ? node.type : wrap[depth + 1]))
-        { return sibling.copy(sibling.content.append(prosemirrorModel.Fragment.from(withWrappers(node, wrap, depth + 1)))) }
+        { return sibling.copy(sibling.content.append(dist.Fragment.from(withWrappers(node, wrap, depth + 1)))) }
     }
   }
 
   function closeRight(node, depth) {
     if (depth == 0) { return node }
     var fragment = node.content.replaceChild(node.childCount - 1, closeRight(node.lastChild, depth - 1));
-    var fill = node.contentMatchAt(node.childCount).fillBefore(prosemirrorModel.Fragment.empty, true);
+    var fill = node.contentMatchAt(node.childCount).fillBefore(dist.Fragment.empty, true);
     return node.copy(fragment.append(fill))
   }
 
@@ -16868,10 +16832,10 @@
     for (var i = array.length - 2; i >= 0; i -= 2) {
       var type = schema.nodes[array[i]];
       if (!type || type.hasRequiredAttrs()) { break }
-      content = prosemirrorModel.Fragment.from(type.create(array[i + 1], content));
+      content = dist.Fragment.from(type.create(array[i + 1], content));
       openStart++; openEnd++;
     }
-    return new prosemirrorModel.Slice(content, openStart, openEnd)
+    return new dist.Slice(content, openStart, openEnd)
   }
 
   var observeOptions = {childList: true, characterData: true, attributes: true, subtree: true, characterDataOldValue: true};
@@ -17120,7 +17084,7 @@
     }
 
     var sel = view.state.selection;
-    if (!(sel instanceof prosemirrorState.TextSelection) || !sel.$from.sameParent(sel.$to)) {
+    if (!(sel instanceof dist$3.TextSelection) || !sel.$from.sameParent(sel.$to)) {
       var text = String.fromCharCode(event.charCode);
       if (!view.someProp("handleTextInput", function (f) { return f(view, sel.$from.pos, sel.$to.pos, text); }))
         { view.dispatch(view.state.tr.insertText(text).scrollIntoView()); }
@@ -17162,8 +17126,8 @@
   function selectClickedLeaf(view, inside) {
     if (inside == -1) { return false }
     var $pos = view.state.doc.resolve(inside), node = $pos.nodeAfter;
-    if (node && node.isAtom && prosemirrorState.NodeSelection.isSelectable(node)) {
-      updateSelection(view, new prosemirrorState.NodeSelection($pos), "pointer");
+    if (node && node.isAtom && dist$3.NodeSelection.isSelectable(node)) {
+      updateSelection(view, new dist$3.NodeSelection($pos), "pointer");
       return true
     }
     return false
@@ -17172,12 +17136,12 @@
   function selectClickedNode(view, inside) {
     if (inside == -1) { return false }
     var sel = view.state.selection, selectedNode, selectAt;
-    if (sel instanceof prosemirrorState.NodeSelection) { selectedNode = sel.node; }
+    if (sel instanceof dist$3.NodeSelection) { selectedNode = sel.node; }
 
     var $pos = view.state.doc.resolve(inside);
     for (var i = $pos.depth + 1; i > 0; i--) {
       var node = i > $pos.depth ? $pos.nodeAfter : $pos.node(i);
-      if (prosemirrorState.NodeSelection.isSelectable(node)) {
+      if (dist$3.NodeSelection.isSelectable(node)) {
         if (selectedNode && sel.$from.depth > 0 &&
             i >= sel.$from.depth && $pos.before(sel.$from.depth + 1) == sel.$from.pos)
           { selectAt = $pos.before(sel.$from.depth); }
@@ -17188,7 +17152,7 @@
     }
 
     if (selectAt != null) {
-      updateSelection(view, prosemirrorState.NodeSelection.create(view.state.doc, selectAt), "pointer");
+      updateSelection(view, dist$3.NodeSelection.create(view.state.doc, selectAt), "pointer");
       return true
     } else {
       return false
@@ -17216,7 +17180,7 @@
     var doc = view.state.doc;
     if (inside == -1) {
       if (doc.inlineContent) {
-        updateSelection(view, prosemirrorState.TextSelection.create(doc, 0, doc.content.size), "pointer");
+        updateSelection(view, dist$3.TextSelection.create(doc, 0, doc.content.size), "pointer");
         return true
       }
       return false
@@ -17227,9 +17191,9 @@
       var node = i > $pos.depth ? $pos.nodeAfter : $pos.node(i);
       var nodePos = $pos.before(i);
       if (node.inlineContent)
-        { updateSelection(view, prosemirrorState.TextSelection.create(doc, nodePos + 1, nodePos + 1 + node.content.size), "pointer"); }
-      else if (prosemirrorState.NodeSelection.isSelectable(node))
-        { updateSelection(view, prosemirrorState.NodeSelection.create(doc, nodePos), "pointer"); }
+        { updateSelection(view, dist$3.TextSelection.create(doc, nodePos + 1, nodePos + 1 + node.content.size), "pointer"); }
+      else if (dist$3.NodeSelection.isSelectable(node))
+        { updateSelection(view, dist$3.NodeSelection.create(doc, nodePos), "pointer"); }
       else
         { continue }
       return true
@@ -17291,7 +17255,7 @@
     this.target = targetDesc ? targetDesc.dom : null;
 
     if (targetNode.type.spec.draggable && targetNode.type.spec.selectable !== false ||
-        view.state.selection instanceof prosemirrorState.NodeSelection && targetPos == view.state.selection.from)
+        view.state.selection instanceof dist$3.NodeSelection && targetPos == view.state.selection.from)
       { this.mightDrag = {node: targetNode,
                         pos: targetPos,
                         addAttr: this.target && !this.target.draggable,
@@ -17345,9 +17309,9 @@
                // (hidden) cursor is doesn't change the selection, and
                // thus doesn't get a reaction from ProseMirror. This
                // works around that.
-               (result.chrome && !(this.view.state.selection instanceof prosemirrorState.TextSelection) &&
+               (result.chrome && !(this.view.state.selection instanceof dist$3.TextSelection) &&
                 (pos.pos == this.view.state.selection.from || pos.pos == this.view.state.selection.to))) {
-      updateSelection(this.view, prosemirrorState.Selection.near(this.view.state.doc.resolve(pos.pos)), "pointer");
+      updateSelection(this.view, dist$3.Selection.near(this.view.state.doc.resolve(pos.pos)), "pointer");
       event.preventDefault();
     } else {
       setSelectionOrigin(this.view, "pointer");
@@ -17491,7 +17455,7 @@
 
   function doPaste(view, text, html, e) {
     var slice = parseFromClipboard(view, text, html, view.shiftKey, view.state.selection.$from);
-    if (view.someProp("handlePaste", function (f) { return f(view, e, slice || prosemirrorModel.Slice.empty); }) || !slice) { return true }
+    if (view.someProp("handlePaste", function (f) { return f(view, e, slice || dist.Slice.empty); }) || !slice) { return true }
 
     var singleNode = sliceSingleNode(slice);
     var tr = singleNode ? view.state.tr.replaceSelectionWith(singleNode, view.shiftKey) : view.state.tr.replaceSelection(slice);
@@ -17521,12 +17485,12 @@
 
     var sel = view.state.selection;
     var pos = sel.empty ? null : view.posAtCoords(eventCoords(e));
-    if (pos && pos.pos >= sel.from && pos.pos <= (sel instanceof prosemirrorState.NodeSelection ? sel.to - 1: sel.to)) ; else if (mouseDown && mouseDown.mightDrag) {
-      view.dispatch(view.state.tr.setSelection(prosemirrorState.NodeSelection.create(view.state.doc, mouseDown.mightDrag.pos)));
+    if (pos && pos.pos >= sel.from && pos.pos <= (sel instanceof dist$3.NodeSelection ? sel.to - 1: sel.to)) ; else if (mouseDown && mouseDown.mightDrag) {
+      view.dispatch(view.state.tr.setSelection(dist$3.NodeSelection.create(view.state.doc, mouseDown.mightDrag.pos)));
     } else if (e.target && e.target.nodeType == 1) {
       var desc = view.docView.nearestDesc(e.target, true);
       if (!desc || !desc.node.type.spec.draggable || desc == view.docView) { return }
-      view.dispatch(view.state.tr.setSelection(prosemirrorState.NodeSelection.create(view.state.doc, desc.posBefore)));
+      view.dispatch(view.state.tr.setSelection(dist$3.NodeSelection.create(view.state.doc, desc.posBefore)));
     }
     var slice = view.state.selection.content();
     var ref = serializeForClipboard(view, slice);
@@ -17577,9 +17541,9 @@
     if (tr.doc.eq(beforeInsert)) { return }
 
     var $pos = tr.doc.resolve(pos);
-    if (isNode && prosemirrorState.NodeSelection.isSelectable(slice.content.firstChild) &&
+    if (isNode && dist$3.NodeSelection.isSelectable(slice.content.firstChild) &&
         $pos.nodeAfter && $pos.nodeAfter.sameMarkup(slice.content.firstChild))
-      { tr.setSelection(new prosemirrorState.NodeSelection($pos)); }
+      { tr.setSelection(new dist$3.NodeSelection($pos)); }
     else
       { tr.setSelection(selectionBetween(view, $pos, tr.doc.resolve(tr.mapping.map(insertPos)))); }
     view.focus();
@@ -18469,7 +18433,7 @@
       var startDOM = this.root.getSelection().focusNode;
       if (this.someProp("handleScrollToSelection", function (f) { return f(this$1); }))
         ; // Handled
-      else if (state.selection instanceof prosemirrorState.NodeSelection)
+      else if (state.selection instanceof dist$3.NodeSelection)
         { scrollRectIntoView(this, this.docView.domAfterPos(state.selection.from).getBoundingClientRect(), startDOM); }
       else
         { scrollRectIntoView(this, this.coordsAtPos(state.selection.head), startDOM); }
@@ -18693,7 +18657,7 @@
       var visible = view.state.selection.visible;
       // Needs a cursor wrapper
       var marks = view.state.storedMarks || $pos.marks(), dom;
-      if (!view.cursorWrapper || !prosemirrorModel.Mark.sameSet(view.cursorWrapper.deco.spec.marks, marks) ||
+      if (!view.cursorWrapper || !dist.Mark.sameSet(view.cursorWrapper.deco.spec.marks, marks) ||
           view.cursorWrapper.dom.textContent != "\ufeff" ||
           view.cursorWrapper.deco.spec.visible != visible)
         { dom = cursorWrapperDOM(visible); }
@@ -18933,24 +18897,13 @@
 
   });
 
-  var index$3 = unwrapExports(dist$6);
-  var dist_1$3 = dist$6.EditorView;
-  var dist_2$3 = dist$6.Decoration;
-  var dist_3$3 = dist$6.DecorationSet;
-  var dist_4$3 = dist$6.__serializeForClipboard;
-  var dist_5$3 = dist$6.__parseFromClipboard;
-  var dist_6$3 = dist$6.__endComposition;
-
-  var dist$7 = /*#__PURE__*/Object.freeze({
-    'default': index$3,
-    __moduleExports: dist$6,
-    EditorView: dist_1$3,
-    Decoration: dist_2$3,
-    DecorationSet: dist_3$3,
-    __serializeForClipboard: dist_4$3,
-    __parseFromClipboard: dist_5$3,
-    __endComposition: dist_6$3
-  });
+  unwrapExports(dist$4);
+  var dist_1$3 = dist$4.EditorView;
+  var dist_2$3 = dist$4.Decoration;
+  var dist_3$3 = dist$4.DecorationSet;
+  var dist_4$3 = dist$4.__serializeForClipboard;
+  var dist_5$3 = dist$4.__parseFromClipboard;
+  var dist_6$3 = dist$4.__endComposition;
 
   /**
    * @param {Object<string,any>} obj
@@ -20277,7 +20230,7 @@
   // which they appear determines their precedence (the ones early in
   // the array get to dispatch first).
   function keymap(bindings) {
-    return new prosemirrorState.Plugin({props: {handleKeyDown: keydownHandler(bindings)}})
+    return new dist$3.Plugin({props: {handleKeyDown: keydownHandler(bindings)}})
   }
 
   // :: (Object) → (view: EditorView, event: dom.Event) → bool
@@ -20518,14 +20471,14 @@
     return Append;
   }(RopeSequence));
 
-  var dist$8 = RopeSequence;
+  var dist$5 = RopeSequence;
 
-  var dist$9 = /*#__PURE__*/Object.freeze({
-    'default': dist$8,
-    __moduleExports: dist$8
+  var dist$6 = /*#__PURE__*/Object.freeze({
+    'default': dist$5,
+    __moduleExports: dist$5
   });
 
-  var require$$0$2 = ( dist$9 && dist$8 ) || dist$9;
+  var require$$0$2 = ( dist$6 && dist$5 ) || dist$6;
 
   var history_1 = createCommonjsModule(function (module, exports) {
 
@@ -20896,8 +20849,8 @@
     return tr.setMeta(closeHistoryKey, true)
   }
 
-  var historyKey = new prosemirrorState.PluginKey("history");
-  var closeHistoryKey = new prosemirrorState.PluginKey("closeHistory");
+  var historyKey = new dist$3.PluginKey("history");
+  var closeHistoryKey = new dist$3.PluginKey("closeHistory");
 
   // :: (?Object) → Plugin
   // Returns a plugin that enables the undo history for an editor. The
@@ -20922,7 +20875,7 @@
   function history(config) {
     config = {depth: config && config.depth || 100,
               newGroupDelay: config && config.newGroupDelay || 500};
-    return new prosemirrorState.Plugin({
+    return new dist$3.Plugin({
       key: historyKey,
 
       state: {
@@ -21050,11 +21003,11 @@
     // If the node below has no content and the node above is
     // selectable, delete the node below and select the one above.
     if ($cursor.parent.content.size == 0 &&
-        (textblockAt(before, "end") || prosemirrorState.NodeSelection.isSelectable(before))) {
+        (textblockAt(before, "end") || dist$3.NodeSelection.isSelectable(before))) {
       if (dispatch) {
         var tr = state.tr.deleteRange($cursor.before(), $cursor.after());
-        tr.setSelection(textblockAt(before, "end") ? prosemirrorState.Selection.findFrom(tr.doc.resolve(tr.mapping.map($cut.pos, -1)), -1)
-                        : prosemirrorState.NodeSelection.create(tr.doc, $cut.pos - before.nodeSize));
+        tr.setSelection(textblockAt(before, "end") ? dist$3.Selection.findFrom(tr.doc.resolve(tr.mapping.map($cut.pos, -1)), -1)
+                        : dist$3.NodeSelection.create(tr.doc, $cut.pos - before.nodeSize));
         dispatch(tr.scrollIntoView());
       }
       return true
@@ -21090,9 +21043,9 @@
       { return false }
 
     var $cut = findCutBefore($cursor), node = $cut && $cut.nodeBefore;
-    if (!node || !prosemirrorState.NodeSelection.isSelectable(node)) { return false }
+    if (!node || !dist$3.NodeSelection.isSelectable(node)) { return false }
     if (dispatch)
-      { dispatch(state.tr.setSelection(prosemirrorState.NodeSelection.create(state.doc, $cut.pos - node.nodeSize)).scrollIntoView()); }
+      { dispatch(state.tr.setSelection(dist$3.NodeSelection.create(state.doc, $cut.pos - node.nodeSize)).scrollIntoView()); }
     return true
   }
 
@@ -21129,11 +21082,11 @@
     // If the node above has no content and the node below is
     // selectable, delete the node above and select the one below.
     if ($cursor.parent.content.size == 0 &&
-        (textblockAt(after, "start") || prosemirrorState.NodeSelection.isSelectable(after))) {
+        (textblockAt(after, "start") || dist$3.NodeSelection.isSelectable(after))) {
       if (dispatch) {
         var tr = state.tr.deleteRange($cursor.before(), $cursor.after());
-        tr.setSelection(textblockAt(after, "start") ? prosemirrorState.Selection.findFrom(tr.doc.resolve(tr.mapping.map($cut.pos)), 1)
-                        : prosemirrorState.NodeSelection.create(tr.doc, tr.mapping.map($cut.pos)));
+        tr.setSelection(textblockAt(after, "start") ? dist$3.Selection.findFrom(tr.doc.resolve(tr.mapping.map($cut.pos)), 1)
+                        : dist$3.NodeSelection.create(tr.doc, tr.mapping.map($cut.pos)));
         dispatch(tr.scrollIntoView());
       }
       return true
@@ -21163,9 +21116,9 @@
       { return false }
 
     var $cut = findCutAfter($cursor), node = $cut && $cut.nodeAfter;
-    if (!node || !prosemirrorState.NodeSelection.isSelectable(node)) { return false }
+    if (!node || !dist$3.NodeSelection.isSelectable(node)) { return false }
     if (dispatch)
-      { dispatch(state.tr.setSelection(prosemirrorState.NodeSelection.create(state.doc, $cut.pos)).scrollIntoView()); }
+      { dispatch(state.tr.setSelection(dist$3.NodeSelection.create(state.doc, $cut.pos)).scrollIntoView()); }
     return true
   }
 
@@ -21183,7 +21136,7 @@
   // closest ancestor block of the selection that can be joined, with
   // the sibling above it.
   function joinUp(state, dispatch) {
-    var sel = state.selection, nodeSel = sel instanceof prosemirrorState.NodeSelection, point;
+    var sel = state.selection, nodeSel = sel instanceof dist$3.NodeSelection, point;
     if (nodeSel) {
       if (sel.node.isTextblock || !prosemirrorTransform.canJoin(state.doc, sel.from)) { return false }
       point = sel.from;
@@ -21193,7 +21146,7 @@
     }
     if (dispatch) {
       var tr = state.tr.join(point);
-      if (nodeSel) { tr.setSelection(prosemirrorState.NodeSelection.create(tr.doc, point - state.doc.resolve(point).nodeBefore.nodeSize)); }
+      if (nodeSel) { tr.setSelection(dist$3.NodeSelection.create(tr.doc, point - state.doc.resolve(point).nodeBefore.nodeSize)); }
       dispatch(tr.scrollIntoView());
     }
     return true
@@ -21204,7 +21157,7 @@
   // that can be joined, with the sibling after it.
   function joinDown(state, dispatch) {
     var sel = state.selection, point;
-    if (sel instanceof prosemirrorState.NodeSelection) {
+    if (sel instanceof dist$3.NodeSelection) {
       if (sel.node.isTextblock || !prosemirrorTransform.canJoin(state.doc, sel.to)) { return false }
       point = sel.to;
     } else {
@@ -21255,7 +21208,7 @@
     if (!above.canReplaceWith(after, after, type)) { return false }
     if (dispatch) {
       var pos = $head.after(), tr = state.tr.replaceWith(pos, pos, type.createAndFill());
-      tr.setSelection(prosemirrorState.Selection.near(tr.doc.resolve(pos), 1));
+      tr.setSelection(dist$3.Selection.near(tr.doc.resolve(pos), 1));
       dispatch(tr.scrollIntoView());
     }
     return true
@@ -21274,7 +21227,7 @@
     if (dispatch) {
       var side = (!$from.parentOffset && $to.index() < $to.parent.childCount ? $from : $to).pos;
       var tr = state.tr.insert(side, type.createAndFill());
-      tr.setSelection(prosemirrorState.TextSelection.create(tr.doc, side + 1));
+      tr.setSelection(dist$3.TextSelection.create(tr.doc, side + 1));
       dispatch(tr.scrollIntoView());
     }
     return true
@@ -21307,7 +21260,7 @@
     var ref = state.selection;
     var $from = ref.$from;
     var $to = ref.$to;
-    if (state.selection instanceof prosemirrorState.NodeSelection && state.selection.node.isBlock) {
+    if (state.selection instanceof dist$3.NodeSelection && state.selection.node.isBlock) {
       if (!$from.parentOffset || !prosemirrorTransform.canSplit(state.doc, $from.pos)) { return false }
       if (dispatch) { dispatch(state.tr.split($from.pos).scrollIntoView()); }
       return true
@@ -21318,7 +21271,7 @@
     if (dispatch) {
       var atEnd = $to.parentOffset == $to.parent.content.size;
       var tr = state.tr;
-      if (state.selection instanceof prosemirrorState.TextSelection) { tr.deleteSelection(); }
+      if (state.selection instanceof dist$3.TextSelection) { tr.deleteSelection(); }
       var deflt = $from.depth == 0 ? null : $from.node(-1).contentMatchAt($from.indexAfter(-1)).defaultType;
       var types = atEnd && deflt ? [{type: deflt}] : null;
       var can = prosemirrorTransform.canSplit(tr.doc, tr.mapping.map($from.pos), 1, types);
@@ -21329,7 +21282,7 @@
       if (can) {
         tr.split(tr.mapping.map($from.pos), 1, types);
         if (!atEnd && !$from.parentOffset && $from.parent.type != deflt &&
-            $from.node(-1).canReplace($from.index(-1), $from.indexAfter(-1), prosemirrorModel.Fragment.from(deflt.create(), $from.parent)))
+            $from.node(-1).canReplace($from.index(-1), $from.indexAfter(-1), dist.Fragment.from(deflt.create(), $from.parent)))
           { tr.setNodeMarkup(tr.mapping.map($from.before()), deflt); }
       }
       dispatch(tr.scrollIntoView());
@@ -21359,14 +21312,14 @@
     var same = $from.sharedDepth(to);
     if (same == 0) { return false }
     pos = $from.before(same);
-    if (dispatch) { dispatch(state.tr.setSelection(prosemirrorState.NodeSelection.create(state.doc, pos))); }
+    if (dispatch) { dispatch(state.tr.setSelection(dist$3.NodeSelection.create(state.doc, pos))); }
     return true
   }
 
   // :: (EditorState, ?(tr: Transaction)) → bool
   // Select the whole document.
   function selectAll(state, dispatch) {
-    if (dispatch) { dispatch(state.tr.setSelection(new prosemirrorState.AllSelection(state.doc))); }
+    if (dispatch) { dispatch(state.tr.setSelection(new dist$3.AllSelection(state.doc))); }
     return true
   }
 
@@ -21396,11 +21349,11 @@
         (conn = (match = before.contentMatchAt(before.childCount)).findWrapping(after.type)) &&
         match.matchType(conn[0] || after.type).validEnd) {
       if (dispatch) {
-        var end = $cut.pos + after.nodeSize, wrap = prosemirrorModel.Fragment.empty;
+        var end = $cut.pos + after.nodeSize, wrap = dist.Fragment.empty;
         for (var i = conn.length - 1; i >= 0; i--)
-          { wrap = prosemirrorModel.Fragment.from(conn[i].create(null, wrap)); }
-        wrap = prosemirrorModel.Fragment.from(before.copy(wrap));
-        var tr = state.tr.step(new prosemirrorTransform.ReplaceAroundStep($cut.pos - 1, end, $cut.pos, end, new prosemirrorModel.Slice(wrap, 1, 0), conn.length, true));
+          { wrap = dist.Fragment.from(conn[i].create(null, wrap)); }
+        wrap = dist.Fragment.from(before.copy(wrap));
+        var tr = state.tr.step(new prosemirrorTransform.ReplaceAroundStep($cut.pos - 1, end, $cut.pos, end, new dist.Slice(wrap, 1, 0), conn.length, true));
         var joinAt = end + 2 * conn.length;
         if (prosemirrorTransform.canJoin(tr.doc, joinAt)) { tr.join(joinAt); }
         dispatch(tr.scrollIntoView());
@@ -21408,7 +21361,7 @@
       return true
     }
 
-    var selAfter = prosemirrorState.Selection.findFrom($cut, 1);
+    var selAfter = dist$3.Selection.findFrom($cut, 1);
     var range = selAfter && selAfter.$from.blockRange(selAfter.$to), target = range && prosemirrorTransform.liftTarget(range);
     if (target != null && target >= $cut.depth) {
       if (dispatch) { dispatch(state.tr.lift(range, target).scrollIntoView()); }
@@ -21732,7 +21685,7 @@
   function dropCursor(options) {
     if ( options === void 0 ) options = {};
 
-    return new prosemirrorState.Plugin({
+    return new dist$3.Plugin({
       view: function view(editorView) { return new DropCursorView(editorView, options) }
     })
   }
@@ -21856,9 +21809,7 @@
     dropCursor: dropcursor_1
   });
 
-  var prosemirrorView = ( dist$7 && index$3 ) || dist$7;
-
-  var dist$a = createCommonjsModule(function (module, exports) {
+  var dist$7 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
@@ -21883,7 +21834,7 @@
       return GapCursor.valid($pos) ? new GapCursor($pos) : Selection$$1.near($pos)
     };
 
-    GapCursor.prototype.content = function content () { return prosemirrorModel.Slice.empty };
+    GapCursor.prototype.content = function content () { return dist.Slice.empty };
 
     GapCursor.prototype.eq = function eq (other) {
       return other instanceof GapCursor && other.head == this.head
@@ -21940,11 +21891,11 @@
     };
 
     return GapCursor;
-  }(prosemirrorState.Selection));
+  }(dist$3.Selection));
 
   GapCursor.prototype.visible = false;
 
-  prosemirrorState.Selection.jsonID("gapcursor", GapCursor);
+  dist$3.Selection.jsonID("gapcursor", GapCursor);
 
   var GapBookmark = function GapBookmark(pos) {
     this.pos = pos;
@@ -21954,7 +21905,7 @@
   };
   GapBookmark.prototype.resolve = function resolve (doc) {
     var $pos = doc.resolve(this.pos);
-    return GapCursor.valid($pos) ? new GapCursor($pos) : prosemirrorState.Selection.near($pos)
+    return GapCursor.valid($pos) ? new GapCursor($pos) : dist$3.Selection.near($pos)
   };
 
   function closedBefore($pos) {
@@ -21993,7 +21944,7 @@
   // `style/gapcursor.css` from the package's directory or add your own
   // styles to make it visible.
   var gapCursor = function() {
-    return new prosemirrorState.Plugin({
+    return new dist$3.Plugin({
       props: {
         decorations: drawGapCursor,
 
@@ -22019,7 +21970,7 @@
     return function(state, dispatch, view) {
       var sel = state.selection;
       var $start = dir > 0 ? sel.$to : sel.$from, mustMove = sel.empty;
-      if (sel instanceof prosemirrorState.TextSelection) {
+      if (sel instanceof dist$3.TextSelection) {
         if (!view.endOfTextblock(dirStr)) { return false }
         mustMove = false;
         $start = state.doc.resolve(dir > 0 ? $start.after() : $start.before());
@@ -22036,7 +21987,7 @@
     if (!GapCursor.valid($pos)) { return false }
     var ref = view.posAtCoords({left: event.clientX, top: event.clientY});
     var inside = ref.inside;
-    if (inside > -1 && prosemirrorState.NodeSelection.isSelectable(view.state.doc.nodeAt(inside))) { return false }
+    if (inside > -1 && dist$3.NodeSelection.isSelectable(view.state.doc.nodeAt(inside))) { return false }
     view.dispatch(view.state.tr.setSelection(new GapCursor($pos)));
     return true
   }
@@ -22045,7 +21996,7 @@
     if (!(state.selection instanceof GapCursor)) { return null }
     var node = document.createElement("div");
     node.className = "ProseMirror-gapcursor";
-    return prosemirrorView.DecorationSet.create(state.doc, [prosemirrorView.Decoration.widget(state.selection.head, node, {key: "gapcursor"})])
+    return dist$4.DecorationSet.create(state.doc, [dist$4.Decoration.widget(state.selection.head, node, {key: "gapcursor"})])
   }
 
   exports.gapCursor = gapCursor;
@@ -22053,13 +22004,13 @@
 
   });
 
-  var index$4 = unwrapExports(dist$a);
-  var dist_1$4 = dist$a.gapCursor;
-  var dist_2$4 = dist$a.GapCursor;
+  var index$1 = unwrapExports(dist$7);
+  var dist_1$4 = dist$7.gapCursor;
+  var dist_2$4 = dist$7.GapCursor;
 
-  var dist$b = /*#__PURE__*/Object.freeze({
-    'default': index$4,
-    __moduleExports: dist$a,
+  var dist$8 = /*#__PURE__*/Object.freeze({
+    'default': index$1,
+    __moduleExports: dist$7,
     gapCursor: dist_1$4,
     GapCursor: dist_2$4
   });
@@ -22240,7 +22191,7 @@
 
   var prosemirrorHistory = ( history$1 && history ) || history$1;
 
-  var dist$c = createCommonjsModule(function (module, exports) {
+  var dist$9 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
@@ -22757,7 +22708,7 @@
   //     the top of the viewport when the editor is partially scrolled
   //     out of view.
   function menuBar(options) {
-    return new prosemirrorState.Plugin({
+    return new dist$3.Plugin({
       view: function view(editorView) { return new MenuBarView(editorView, options) }
     })
   }
@@ -22916,24 +22867,24 @@
 
   });
 
-  var index$5 = unwrapExports(dist$c);
-  var dist_1$5 = dist$c.MenuItem;
-  var dist_2$5 = dist$c.Dropdown;
-  var dist_3$4 = dist$c.DropdownSubmenu;
-  var dist_4$4 = dist$c.renderGrouped;
-  var dist_5$4 = dist$c.icons;
-  var dist_6$4 = dist$c.joinUpItem;
-  var dist_7$3 = dist$c.liftItem;
-  var dist_8$3 = dist$c.selectParentNodeItem;
-  var dist_9$3 = dist$c.undoItem;
-  var dist_10$2 = dist$c.redoItem;
-  var dist_11$2 = dist$c.wrapItem;
-  var dist_12$2 = dist$c.blockTypeItem;
-  var dist_13$2 = dist$c.menuBar;
+  var index$2 = unwrapExports(dist$9);
+  var dist_1$5 = dist$9.MenuItem;
+  var dist_2$5 = dist$9.Dropdown;
+  var dist_3$4 = dist$9.DropdownSubmenu;
+  var dist_4$4 = dist$9.renderGrouped;
+  var dist_5$4 = dist$9.icons;
+  var dist_6$4 = dist$9.joinUpItem;
+  var dist_7$3 = dist$9.liftItem;
+  var dist_8$3 = dist$9.selectParentNodeItem;
+  var dist_9$3 = dist$9.undoItem;
+  var dist_10$2 = dist$9.redoItem;
+  var dist_11$2 = dist$9.wrapItem;
+  var dist_12$2 = dist$9.blockTypeItem;
+  var dist_13$2 = dist$9.menuBar;
 
-  var dist$d = /*#__PURE__*/Object.freeze({
-    'default': index$5,
-    __moduleExports: dist$c,
+  var dist$a = /*#__PURE__*/Object.freeze({
+    'default': index$2,
+    __moduleExports: dist$9,
     MenuItem: dist_1$5,
     Dropdown: dist_2$5,
     DropdownSubmenu: dist_3$4,
@@ -23035,9 +22986,9 @@
         // Don't do anything if this is the top of the list
         if ($from.index(range.depth - 1) == 0) { return false }
         var $insert = state.doc.resolve(range.start - 2);
-        outerRange = new prosemirrorModel.NodeRange($insert, $insert, range.depth);
+        outerRange = new dist.NodeRange($insert, $insert, range.depth);
         if (range.endIndex < range.parent.childCount)
-          { range = new prosemirrorModel.NodeRange($from, state.doc.resolve($to.end(range.depth)), range.depth); }
+          { range = new dist.NodeRange($from, state.doc.resolve($to.end(range.depth)), range.depth); }
         doJoin = true;
       }
       var wrap = prosemirrorTransform.findWrapping(outerRange, listType, attrs, range);
@@ -23048,12 +22999,12 @@
   }
 
   function doWrapInList(tr, range, wrappers, joinBefore, listType) {
-    var content = prosemirrorModel.Fragment.empty;
+    var content = dist.Fragment.empty;
     for (var i = wrappers.length - 1; i >= 0; i--)
-      { content = prosemirrorModel.Fragment.from(wrappers[i].type.create(wrappers[i].attrs, content)); }
+      { content = dist.Fragment.from(wrappers[i].type.create(wrappers[i].attrs, content)); }
 
     tr.step(new prosemirrorTransform.ReplaceAroundStep(range.start - (joinBefore ? 2 : 0), range.end, range.start, range.end,
-                                  new prosemirrorModel.Slice(content, 0, 0), wrappers.length, true));
+                                  new dist.Slice(content, 0, 0), wrappers.length, true));
 
     var found = 0;
     for (var i$1 = 0; i$1 < wrappers.length; i$1++) { if (wrappers[i$1].type == listType) { found = i$1 + 1; } }
@@ -23089,14 +23040,14 @@
         if ($from.depth == 2 || $from.node(-3).type != itemType ||
             $from.index(-2) != $from.node(-2).childCount - 1) { return false }
         if (dispatch) {
-          var wrap = prosemirrorModel.Fragment.empty, keepItem = $from.index(-1) > 0;
+          var wrap = dist.Fragment.empty, keepItem = $from.index(-1) > 0;
           // Build a fragment containing empty versions of the structure
           // from the outer list item to the parent node of the cursor
           for (var d = $from.depth - (keepItem ? 1 : 2); d >= $from.depth - 3; d--)
-            { wrap = prosemirrorModel.Fragment.from($from.node(d).copy(wrap)); }
+            { wrap = dist.Fragment.from($from.node(d).copy(wrap)); }
           // Add a second list item with an empty default start node
-          wrap = wrap.append(prosemirrorModel.Fragment.from(itemType.createAndFill()));
-          var tr$1 = state.tr.replace($from.before(keepItem ? null : -1), $from.after(-3), new prosemirrorModel.Slice(wrap, keepItem ? 3 : 2, 2));
+          wrap = wrap.append(dist.Fragment.from(itemType.createAndFill()));
+          var tr$1 = state.tr.replace($from.before(keepItem ? null : -1), $from.after(-3), new dist.Slice(wrap, keepItem ? 3 : 2, 2));
           tr$1.setSelection(state.selection.constructor.near(tr$1.doc.resolve($from.pos + (keepItem ? 3 : 2))));
           dispatch(tr$1.scrollIntoView());
         }
@@ -23135,8 +23086,8 @@
       // There are siblings after the lifted items, which must become
       // children of the last item
       tr.step(new prosemirrorTransform.ReplaceAroundStep(end - 1, endOfList, end, endOfList,
-                                    new prosemirrorModel.Slice(prosemirrorModel.Fragment.from(itemType.create(null, range.parent.copy())), 1, 0), 1, true));
-      range = new prosemirrorModel.NodeRange(tr.doc.resolve(range.$from.pos), tr.doc.resolve(endOfList), range.depth);
+                                    new dist.Slice(dist.Fragment.from(itemType.create(null, range.parent.copy())), 1, 0), 1, true));
+      range = new dist.NodeRange(tr.doc.resolve(range.$from.pos), tr.doc.resolve(endOfList), range.depth);
     }
     dispatch(tr.lift(range, prosemirrorTransform.liftTarget(range)).scrollIntoView());
     return true
@@ -23153,15 +23104,15 @@
     var atStart = range.startIndex == 0, atEnd = range.endIndex == list.childCount;
     var parent = $start.node(-1), indexBefore = $start.index(-1);
     if (!parent.canReplace(indexBefore + (atStart ? 0 : 1), indexBefore + 1,
-                           item.content.append(atEnd ? prosemirrorModel.Fragment.empty : prosemirrorModel.Fragment.from(list))))
+                           item.content.append(atEnd ? dist.Fragment.empty : dist.Fragment.from(list))))
       { return false }
     var start = $start.pos, end = start + item.nodeSize;
     // Strip off the surrounding list. At the sides where we're not at
     // the end of the list, the existing list is closed. At sides where
     // this is the end, it is overwritten to its end.
     tr.step(new prosemirrorTransform.ReplaceAroundStep(start - (atStart ? 1 : 0), end + (atEnd ? 1 : 0), start + 1, end - 1,
-                                  new prosemirrorModel.Slice((atStart ? prosemirrorModel.Fragment.empty : prosemirrorModel.Fragment.from(list.copy(prosemirrorModel.Fragment.empty)))
-                                            .append(atEnd ? prosemirrorModel.Fragment.empty : prosemirrorModel.Fragment.from(list.copy(prosemirrorModel.Fragment.empty))),
+                                  new dist.Slice((atStart ? dist.Fragment.empty : dist.Fragment.from(list.copy(dist.Fragment.empty)))
+                                            .append(atEnd ? dist.Fragment.empty : dist.Fragment.from(list.copy(dist.Fragment.empty))),
                                             atStart ? 0 : 1, atEnd ? 0 : 1), atStart ? 0 : 1));
     dispatch(tr.scrollIntoView());
     return true
@@ -23184,8 +23135,8 @@
 
       if (dispatch) {
         var nestedBefore = nodeBefore.lastChild && nodeBefore.lastChild.type == parent.type;
-        var inner = prosemirrorModel.Fragment.from(nestedBefore ? itemType.create() : null);
-        var slice = new prosemirrorModel.Slice(prosemirrorModel.Fragment.from(itemType.create(null, prosemirrorModel.Fragment.from(parent.type.create(null, inner)))),
+        var inner = dist.Fragment.from(nestedBefore ? itemType.create() : null);
+        var slice = new dist.Slice(dist.Fragment.from(itemType.create(null, dist.Fragment.from(parent.type.create(null, inner)))),
                               nestedBefore ? 3 : 1, 0);
         var before = range.start, after = range.end;
         dispatch(state.tr.step(new prosemirrorTransform.ReplaceAroundStep(before - (nestedBefore ? 3 : 1), after,
@@ -23230,7 +23181,7 @@
     sinkListItem: schemaList_8
   });
 
-  var dist$e = createCommonjsModule(function (module, exports) {
+  var dist$b = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
@@ -23272,7 +23223,7 @@
   function inputRules(ref) {
     var rules = ref.rules;
 
-    var plugin = new prosemirrorState.Plugin({
+    var plugin = new dist$3.Plugin({
       state: {
         init: function init() { return null },
         apply: function apply(tr, prev) {
@@ -23419,23 +23370,23 @@
 
   });
 
-  var index$6 = unwrapExports(dist$e);
-  var dist_1$6 = dist$e.InputRule;
-  var dist_2$6 = dist$e.inputRules;
-  var dist_3$5 = dist$e.undoInputRule;
-  var dist_4$5 = dist$e.emDash;
-  var dist_5$5 = dist$e.ellipsis;
-  var dist_6$5 = dist$e.openDoubleQuote;
-  var dist_7$4 = dist$e.closeDoubleQuote;
-  var dist_8$4 = dist$e.openSingleQuote;
-  var dist_9$4 = dist$e.closeSingleQuote;
-  var dist_10$3 = dist$e.smartQuotes;
-  var dist_11$3 = dist$e.wrappingInputRule;
-  var dist_12$3 = dist$e.textblockTypeInputRule;
+  var index$3 = unwrapExports(dist$b);
+  var dist_1$6 = dist$b.InputRule;
+  var dist_2$6 = dist$b.inputRules;
+  var dist_3$5 = dist$b.undoInputRule;
+  var dist_4$5 = dist$b.emDash;
+  var dist_5$5 = dist$b.ellipsis;
+  var dist_6$5 = dist$b.openDoubleQuote;
+  var dist_7$4 = dist$b.closeDoubleQuote;
+  var dist_8$4 = dist$b.openSingleQuote;
+  var dist_9$4 = dist$b.closeSingleQuote;
+  var dist_10$3 = dist$b.smartQuotes;
+  var dist_11$3 = dist$b.wrappingInputRule;
+  var dist_12$3 = dist$b.textblockTypeInputRule;
 
-  var dist$f = /*#__PURE__*/Object.freeze({
-    'default': index$6,
-    __moduleExports: dist$e,
+  var dist$c = /*#__PURE__*/Object.freeze({
+    'default': index$3,
+    __moduleExports: dist$b,
     InputRule: dist_1$6,
     inputRules: dist_2$6,
     undoInputRule: dist_3$5,
@@ -23452,15 +23403,15 @@
 
   var prosemirrorDropcursor = ( dropcursor$2 && dropcursor$1 ) || dropcursor$2;
 
-  var prosemirrorGapcursor = ( dist$b && index$4 ) || dist$b;
+  var prosemirrorGapcursor = ( dist$8 && index$1 ) || dist$8;
 
-  var prosemirrorMenu = ( dist$d && index$5 ) || dist$d;
+  var prosemirrorMenu = ( dist$a && index$2 ) || dist$a;
 
   var prosemirrorSchemaList = ( schemaList$2 && schemaList$1 ) || schemaList$2;
 
-  var prosemirrorInputrules = ( dist$f && index$6 ) || dist$f;
+  var prosemirrorInputrules = ( dist$c && index$3 ) || dist$c;
 
-  var dist$g = createCommonjsModule(function (module, exports) {
+  var dist$d = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
@@ -23668,7 +23619,7 @@
         var from = ref.from;
         var to = ref.to;
         var attrs = null;
-        if (state.selection instanceof prosemirrorState.NodeSelection && state.selection.node.type == nodeType)
+        if (state.selection instanceof dist$3.NodeSelection && state.selection.node.type == nodeType)
           { attrs = state.selection.node.attrs; }
         openPrompt({
           title: "Insert image",
@@ -24077,7 +24028,7 @@
     if (options.history !== false)
       { plugins.push(prosemirrorHistory.history()); }
 
-    return plugins.concat(new prosemirrorState.Plugin({
+    return plugins.concat(new dist$3.Plugin({
       props: {
         attributes: {class: "ProseMirror-example-setup-style"}
       }
@@ -24091,75 +24042,60 @@
 
   });
 
-  unwrapExports(dist$g);
-  var dist_1$7 = dist$g.buildMenuItems;
-  var dist_2$7 = dist$g.buildKeymap;
-  var dist_3$6 = dist$g.buildInputRules;
-  var dist_4$6 = dist$g.exampleSetup;
+  unwrapExports(dist$d);
+  var dist_1$7 = dist$d.buildMenuItems;
+  var dist_2$7 = dist$d.buildKeymap;
+  var dist_3$6 = dist$d.buildInputRules;
+  var dist_4$6 = dist$d.exampleSetup;
 
   /* eslint-env browser */
 
-  window.addEventListener('load', () => {
-    const ydoc = new Doc();
-    const provider = new WebsocketProvider(`${location.protocol === 'http:' ? 'ws:' : 'wss:'}${location.host}`, 'prosemirror', ydoc);
-    const type = ydoc.get('prosemirror', YXmlFragment);
+  function load( contentDOM ){
 
-    const editor = document.createElement('div');
-    editor.setAttribute('id', 'editor');
-    const editorContainer = document.createElement('div');
-    editorContainer.insertBefore(editor, null);
-    var prosemirrorView = new dist_1$3(editor, {
-      state: dist_7$2.create({
-        schema,
-        plugins: [
-          ySyncPlugin(type),
-          yCursorPlugin(provider.awareness),
-          yUndoPlugin,
-          keymap_2({
-            'Mod-z': undo,
-            'Mod-y': redo,
-            'Mod-Shift-z': redo
-          })
-        ].concat(dist_4$6({ schema }))
-      })
-    });
-    document.body.insertBefore(editorContainer, null);
+  	const ydoc = new Doc();
+  	const provider = new WebsocketProvider(`${location.protocol === 'http:' ? 'ws:' : 'wss:'}${location.host}`, 'prosemirror', ydoc);
+  	const type = ydoc.get('prosemirror', YXmlFragment);
 
-    const connectBtn = document.querySelector('.y-connect-btn');
-    connectBtn.addEventListener('click', () => {
-      if (provider.wsconnected) {
-        provider.disconnect();
-        connectBtn.textContent = 'Connect';
-      } else {
-        provider.connect();
-        connectBtn.textContent = 'Disconnect';
-      }
-    });
+  	const editor = document.createElement('div');
+  	editor.setAttribute('id', 'editor');
+  	const editorContainer = document.createElement('div');
+  	editorContainer.insertBefore(editor, null);
 
-    function load( content ){
-    /*
-  	  prosemirrorView = new dist_1$3(editor, {
-  	    state: dist_7$2.create({
-  	      doc: dist_12.fromSchema( schema ).parse( content ),
-  	      schema,
-  	      plugins: [
-  		ySyncPlugin(type),
-  		yCursorPlugin(provider.awareness),
-  		yUndoPlugin,
-  		keymap_2({
-  		  'Mod-z': undo,
-  		  'Mod-y': redo,
-  		  'Mod-Shift-z': redo
-  		})
-  	      ].concat(dist_4$6({ schema }))
-  	    })
-  	  });
-    */
-    }
+  	const prosemirrorState = dist_7$2.create({
+  		doc: contentDOM ? dist_12.fromSchema( schema ).parse( contentDOM ) : null ,
+  		schema,
+  		plugins: [
+  			ySyncPlugin(type),
+  			yCursorPlugin(provider.awareness),
+  			yUndoPlugin,
+  			keymap_2({
+  					'Mod-z': undo,
+  					'Mod-y': redo,
+  					'Mod-Shift-z': redo
+  					})
+  			].concat(dist_4$6({ schema }))
+  	});
+  	const prosemirrorView = new dist_1$3(editor, { state : prosemirrorState } );
+  	document.body.insertBefore(editorContainer, null);
 
-    window.example = { provider, ydoc, type, prosemirrorView , load };
-    prosemirrorView.focus();
-  });
+  	prosemirrorView.focus();
+
+  	const connectBtn = document.querySelector('.y-connect-btn');
+  	connectBtn.addEventListener('click', () => {
+  		if (provider.wsconnected) {
+  			provider.disconnect();
+  			connectBtn.textContent = 'Connect';
+  		} else {
+  			provider.connect();
+  			connectBtn.textContent = 'Disconnect';
+  		}
+  	});
+
+  	window.prosemirror = { provider, ydoc, type, prosemirrorView, load };
+  }
+
+
+  window.addEventListener('load', load );
 
 }());
 //# sourceMappingURL=prosemirror.js.map
