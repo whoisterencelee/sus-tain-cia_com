@@ -7,6 +7,8 @@
   <meta name="description" content="Open Sustainable Platform for Everyone">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
+  	<script>function $(i){return document.getElementById(i)}</script>
+
 	<script type="text/javascript" src="./y-prosemirror/prosemirror.js" async></script>
 	<link rel=stylesheet href="./y-prosemirror/prosemirror.css" async defer>
 
@@ -42,11 +44,22 @@
 
 	</div>
 
+	<div id="content" style="display:none;"></div>
+
+	<script>
+		var content = document.getElementById( "content" )	
+		content.innerHTML = "This is a test"
+
+	</script>
+
 	<!-- banner -->
 	<div style="background:#4eadb8;color:white;padding:0.5em 12px;">
 
 		<span> Help </span>
-		|<span> Load </span>
+
+		|<span onclick='$( "file" ).click()'> Load </span>
+		<input type="file" id="file" accept=".txt" style="display:none" onchange='var read=new FileReader();read.onload=(d)=>$("content").innerHTML=d.target.result;read.readAsText(this.files[0]);'/>
+
 		|<span> Alone </span>
 		|<span> Private </span>
 		  <button type="button" class="y-connect-btn" style="display:none;">Disconnect</button>
