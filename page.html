@@ -47,9 +47,17 @@
 	<div id="content" style="display:none;"></div>
 
 	<script>
+		// a way to save the file
 		var content = document.getElementById( "content" )	
-		content.innerHTML = "This is a test"
 
+		function saveText( text ){
+			windowURL = window.webkitURL || window.URL;
+			savelink = document.createElement( 'a' );savelink.download=filename;
+			savelink.href = windowURL.createObjectURL( new Blob( [ text ] , { type: 'text/plain' } ) );
+			savelink.style.display = "none";
+			document.body.appendChild( savelink );
+			savelink.click();
+		}
 	</script>
 
 	<!-- banner -->
@@ -57,8 +65,11 @@
 
 		<span> Help </span>
 
-		|<span onclick='$( "file" ).click()'> Load </span>
-		<input type="file" id="file" accept=".txt" style="display:none" onchange='var read=new FileReader();read.onload=(d)=>$("content").innerHTML=d.target.result;read.readAsText(this.files[0]);'/>
+		|<span onclick='$( "load" ).click()'> Load </span>
+		<input type="file" id="load" accept=".txt" style="display:none" onchange='var read=new FileReader();read.onload=(d)=>{$("content").innerHTML=d.target.result};read.readAsText(this.files[0]);filename=files[0].name'/>
+
+		|<span onclick='$( "save" ).click()'> Save </span>
+		<input type="button" id="save" style="display:none" onclick='saveText( $("content").innerHTML )'/>
 
 		|<span> Alone </span>
 		|<span> Private </span>
