@@ -68,6 +68,7 @@
 		}
 
 		function saveText(){
+			$( "content" ).innerHTML = ""
 			$( "content" ).appendChild( window.prosemirror.save() )
 			windowURL = window.webkitURL || window.URL;
 			savelink = document.createElement( 'a' );
