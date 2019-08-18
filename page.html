@@ -35,7 +35,7 @@
 	<!-- header -->
 	<div style="background:#0070c4;color:white;padding:10px;display:flex;flex-direction:row;align-items:center;justify-content:space-between;">
 
-		<h1 id="title">Make sustainable education program</h1>
+		<h1 id="title">Make Science Lunch-on</h1>
 		<div>
 			<div class="buttons">not yet certified</div>
 		</div>
@@ -67,11 +67,12 @@
 			read.readAsText( file );
 		}
 
-		function saveText( text ){
+		function saveText(){
+			$( "content" ).appendChild( window.prosemirror.save() )
 			windowURL = window.webkitURL || window.URL;
 			savelink = document.createElement( 'a' );
 			savelink.download=filename;
-			savelink.href = windowURL.createObjectURL( new Blob( [ text ] , { type: 'text/plain' } ) );
+			savelink.href = windowURL.createObjectURL( new Blob( [ $( "content" ).innerHTML ] , { type: 'text/plain' } ) );
 			savelink.style.display = "none";
 			document.body.appendChild( savelink );
 			savelink.click();
@@ -87,7 +88,7 @@
 		<input type="file" id="load" accept=".txt" style="display:none" onchange='loadText( this.files[0] )'/>
 
 		|<span onclick='$( "save" ).click()'> Save </span>
-		<input type="button" id="save" style="display:none" onclick='saveText( $("content").innerHTML )'/>
+		<input type="button" id="save" style="display:none" onclick='saveText()'/>
 
 		|<span> Alone </span>
 		|<span> Private </span>

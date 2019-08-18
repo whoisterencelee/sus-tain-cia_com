@@ -24091,7 +24091,11 @@
   		}
   	});
 
-  	window.prosemirror = { provider, ydoc, type, prosemirrorView, load };
+  	function save(){
+  	    return dist_13.fromSchema(schema).serializeFragment( prosemirrorView.state.doc.content );
+  	}
+
+  	window.prosemirror = { provider, ydoc, type, prosemirrorView, load, save };
   }
 
 
