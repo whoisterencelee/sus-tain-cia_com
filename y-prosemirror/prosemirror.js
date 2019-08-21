@@ -24080,6 +24080,12 @@
   	document.body.insertBefore(editorContainer, null);
 
   	prosemirrorView.focus();
+	function changed(){
+		$( "load-" ).style.display="none"
+		$( "save-" ).style.display = ""
+		editor.removeEventListener( 'input' , changed )
+		}
+	editor.addEventListener('input', changed )
 
   	const connectBtn = document.querySelector('.y-connect-btn');
   	connectBtn.addEventListener('click', () => {
