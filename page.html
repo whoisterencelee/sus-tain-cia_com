@@ -121,7 +121,10 @@
         line-height: 0.1;
         font-weight: bold;
       }
-      .ProseMirror img { max-width: 100px }
+      .ProseMirror img { 
+      	max-width: calc( 100% - 15px );
+      	/* max-height: 40vh; */
+	}
       /* this is a rough fix for the first cursor position when the first paragraph is empty */
       .ProseMirror > .ProseMirror-yjs-cursor:first-child {
         margin-top: 16px;
