@@ -24085,12 +24085,13 @@
   	connectBtn.addEventListener('click', () => {
   		if (provider.wsconnected) {
   			provider.disconnect();
-  			connectBtn.textContent = 'Connect';
+  			connectBtn.textContent = 'Disconnecting';
   		} else {
   			provider.connect();
-  			connectBtn.textContent = 'Disconnect';
+  			connectBtn.textContent = 'Connecting';
   		}
   	});
+	setInterval( ()=>{ if ( provider.wsconnected ) connectBtn.textContent = "Connected"; else connectBtn.textContent = "Disconnected" } , 3000 )
 
   	function save(){
   	    return dist_13.fromSchema(schema).serializeFragment( prosemirrorView.state.doc.content );

@@ -31,6 +31,7 @@
 		h1 { margin:0;font-size: 5vh; }
 		.buttons { border:1px solid white;border-radius:2em;padding:0 0.5em;margin:0.25em; }
 		.actions > span { margin-right:1em;cursor:pointer; }
+		.notselect { -webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none; }
 	</style>
 
 	<!-- header -->
@@ -83,7 +84,7 @@
 	</script>
 
 	<!-- actions -->
-	<div class="actions" style="background:#4eadb8;color:white;padding:0.5em 12px;">
+	<div class="actions notselect" style="background:#4eadb8;color:white;padding:0.5em 12px;">
 
 		<span> Help </span>
 
@@ -93,8 +94,7 @@
 		<span id="save-" onclick='$( "save" ).click()' style="display:none;"> Save </span>
 		<input type="button" id="save" style="display:none" onclick='saveText()'/>
 
-		<span> Alone </span>
-		  <button type="button" class="y-connect-btn" style="display:none;">Disconnect</button>
+		<span id="link-" class="y-connect-btn"> Connecting </span>
 
 		<span> Private </span>
 	</div>
@@ -108,6 +108,8 @@
 
     <!-- PROSEMIRROR -->
     <style>
+      .ProseMirror { color: #141935; }
+
       placeholder {
         display: inline;
         border: 1px solid #ccc;
