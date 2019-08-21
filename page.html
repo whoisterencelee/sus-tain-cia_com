@@ -30,6 +30,7 @@
 	<style>
 		h1 { margin:0;font-size: 5vh; }
 		.buttons { border:1px solid white;border-radius:2em;padding:0 0.5em;margin:0.25em; }
+		.actions > span { margin-right:1em;cursor:pointer; }
 	</style>
 
 	<!-- header -->
@@ -44,10 +45,10 @@
 
 	</div>
 
-	<div id="content" style="display:none;">Open Science Platform for Everyone</div>
+	<div id="content" style="display:none;">Beneficial Sustainability for Everyone</div>
 
 	<script>
-		// a way to save the file
+		// Load and Save
 		var content = document.getElementById( "content" )	
 		var filename = $( "title" ).textContent + ".txt"
 
@@ -64,7 +65,10 @@
 
 				window.prosemirror.load( $("content") )
 			};
-			read.readAsText( file );
+
+			$( "load-" ).style.display = "none"
+			$( "save-" ).style.display = ""
+			read.readAsText( file )
 		}
 
 		function saveText(){
@@ -80,25 +84,26 @@
 		}
 	</script>
 
-	<!-- banner -->
-	<div style="background:#4eadb8;color:white;padding:0.5em 12px;">
+	<!-- actions -->
+	<div class="actions" style="background:#4eadb8;color:white;padding:0.5em 12px;">
 
 		<span> Help </span>
 
-		|<span onclick='$( "load" ).click()'> Load </span>
+		<span id="load-" onclick='$( "load" ).click()'> Load </span>
 		<input type="file" id="load" accept=".txt" style="display:none" onchange='loadText( this.files[0] )'/>
 
-		|<span onclick='$( "save" ).click()'> Save </span>
+		<span id="save-" onclick='$( "save" ).click()' style="display:none;"> Save </span>
 		<input type="button" id="save" style="display:none" onclick='saveText()'/>
 
-		|<span> Alone </span>
-		|<span> Private </span>
+		<span> Alone </span>
 		  <button type="button" class="y-connect-btn" style="display:none;">Disconnect</button>
+
+		<span> Private </span>
 	</div>
 
 	<!-- Need -->
 	<div style="background:#a4c7c9;padding:0.25em 12px;display:flex;">
-		<label style="background:white;border-radius:2em;padding:0.25em 0.5em;display:flex;flex-grow:1;">🌱 
+		<label alt="hello" style="background:white;border-radius:2em;padding:0.25em 0.5em;display:flex;flex-grow:1;">🌱 
 			<input style="border:0;flex-grow:1;margin:0 0.5em;font-family:Arial;" placeholder="enter whatever you need or help with here ..." value="Teachers, Lesson Plans, Classroom"></input>
 		</label>
 	</div>
