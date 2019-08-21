@@ -24059,6 +24059,7 @@
   	const editor = document.createElement('div');
   	editor.setAttribute('id', 'editor');
   	const editorContainer = document.createElement('div');
+  	editorContainer.className='ProseMirror-container';
   	editorContainer.insertBefore(editor, null);
 
   	const prosemirrorState = dist_7$2.create({

@@ -1,5 +1,6 @@
 .ProseMirror {
   position: relative;
+  flex-grow: 1;
 }
 
 .ProseMirror {
@@ -305,10 +306,23 @@ li.ProseMirror-selectednode:after {
   border-radius: 4px;
   border: 2px solid rgba(0, 0, 0, 0.2);
   */
+  display: flex;
+  flex-grow: 1;
   color: black;
   background-clip: padding-box;
   padding: 5px 0;
   margin-bottom: 23px;
+}
+
+.ProseMirror-container {
+  display: flex;
+  flex-grow: 1;
+}
+
+.ProseMirror-menubar-wrapper {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
 }
 
 .ProseMirror p:first-child,
