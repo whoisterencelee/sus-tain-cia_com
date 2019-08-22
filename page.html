@@ -30,7 +30,7 @@
 	<style>
 		h1 { margin:0;font-size: 5vh; }
 		.buttons { border:1px solid white;border-radius:2em;padding:0 0.5em;margin:0.25em; }
-		.actions > span { margin-right:1em;cursor:pointer; }
+		.actions > span { margin:0.2em 0.5em;cursor:pointer; }
 		.notselect { -webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none; }
 	</style>
 
@@ -84,9 +84,11 @@
 	</script>
 
 	<!-- actions -->
-	<div class="actions notselect" style="background:#4eadb8;color:white;padding:0.5em 12px;">
-
-		<span> Help </span>
+	<div class="actions notselect" style="background:#4eadb8;color:white;padding:0.25em 12px;display:flex;align-items:center;flex-wrap:wrap;justify-content:space-between;flex-direction:row;">
+		<!-- Need -->
+		<label style="background:white;border-radius:2em;padding:0.25em 0.5em;margin:0.25em 0;display:flex;flex-grow:1;min-width:300px;">🌱 
+			<input style="border:0;flex-grow:1;margin:0 0.5em;font-family:Arial;" placeholder="enter whatever you need or help with here ..." value="Teachers, Lesson Plans, Classroom"></input>
+		</label>
 
 		<span id="load-" onclick='$( "load" ).click()'> Load </span>
 		<input type="file" id="load" accept=".txt" style="display:none" onchange='loadText( this.files[0] )'/>
@@ -94,16 +96,13 @@
 		<span id="save-" onclick='$( "save" ).click()' style="display:none;"> Save </span>
 		<input type="button" id="save" style="display:none" onclick='saveText()'/>
 
-		<span id="link-" class="y-connect-btn"> Connecting </span>
+		<span id="link-" class="y-connect-btn" style="min-width:6.5em;"> Connecting </span>
 
 		<span> Private </span>
-	</div>
 
-	<!-- Need -->
-	<div style="background:#a4c7c9;padding:0.25em 12px;display:flex;">
-		<label alt="hello" style="background:white;border-radius:2em;padding:0.25em 0.5em;display:flex;flex-grow:1;">🌱 
-			<input style="border:0;flex-grow:1;margin:0 0.5em;font-family:Arial;" placeholder="enter whatever you need or help with here ..." value="Teachers, Lesson Plans, Classroom"></input>
-		</label>
+		<span> Help </span>
+
+
 	</div>
 
     <!-- PROSEMIRROR -->

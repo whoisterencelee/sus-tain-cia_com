@@ -24097,7 +24097,9 @@
   			connectBtn.textContent = 'Connecting';
   		}
   	});
-	setInterval( ()=>{ if ( provider.wsconnected ) connectBtn.textContent = "Connected"; else connectBtn.textContent = "Disconnected" } , 3000 )
+	setInterval( ()=>{ 
+		if ( provider.wsconnected && connectBtn.textContent != "Connected" ) connectBtn.textContent = "Connected" 
+		else if ( connectBtn.textContent != "Disconnected" )  connectBtn.textContent = "Disconnected" } , 3000 )
 
   	function save(){
   	    return dist_13.fromSchema(schema).serializeFragment( prosemirrorView.state.doc.content );
