@@ -312,11 +312,15 @@ li.ProseMirror-selectednode:after {
   background-clip: padding-box;
   padding: 5px 0;
   margin-bottom: 23px;
+  width:65%;
+  min-width: 327px;
 }
 
 .ProseMirror-container {
   display: flex;
   flex-grow: 1;
+  flex-direction: column;
+  align-items: center;
 }
 
 .ProseMirror-menubar-wrapper {

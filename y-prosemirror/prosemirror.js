@@ -24053,7 +24053,7 @@
   function load( contentDOM ){
 
   	const ydoc = new Doc();
-  	const provider = new WebsocketProvider(`${location.protocol === 'http:' ? 'ws:' : 'wss:'}${location.host}`, 'prosemirror', ydoc);
+  	const provider = new WebsocketProvider(`${location.protocol === 'http:' ? 'ws:' : 'wss:'}${location.host}:1234`, 'prosemirror', ydoc);
   	const type = ydoc.get('prosemirror', YXmlFragment);
 
   	const editor = document.createElement('div');
@@ -24079,7 +24079,7 @@
   	const prosemirrorView = new dist_1$3(editor, { state : prosemirrorState } );
   	document.body.insertBefore(editorContainer, null);
 
-  	prosemirrorView.focus();
+  	//prosemirrorView.focus();
 	function changed(){
 		$( "load-" ).style.display="none"
 		$( "save-" ).style.display = ""
